@@ -35,8 +35,17 @@ jobs:
       - name: Build main project
         run: yarn build
 
+      - name: Install yalc globally
+        run: npm install -g yalc
+
+      - name: Publish main project locally with yalc
+        run: yalc publish
+
       - name: Install dependencies for demo
         run: cd demo && yarn install --frozen-lockfile
+
+      - name: Link main project in demo using yalc
+        run: cd demo && yalc add react-split-flap
 
       - name: Build demo
         run: cd demo && yarn build
