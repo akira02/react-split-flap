@@ -26,13 +26,12 @@ yarn add react-split-flap
 ```tsx
 import React from 'react'
 import { SplitFlap, Presets } from 'react-split-flap'
+import 'react-split-flap/dist/index.css'
 
 function App() {
   return <SplitFlap value="HELLO" chars={Presets.ALPHANUM} length={5} className="medium dark" />
 }
 ```
-
-> 🎉 **零配置使用** - 不需要手動導入 CSS 文件，樣式會自動注入！組件採用模組化 CSS 設計，避免樣式衝突。
 
 ## API 參考
 
