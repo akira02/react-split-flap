@@ -27,13 +27,7 @@ jobs:
           cache: 'yarn'
 
       - name: Setup Pages
-        uses: actions/configure-pages@v5
-        with:
-          # Automatically inject basePath in your Next.js configuration file and disable
-          # server side image optimization (currently not supported by GitHub Pages).
-          #
-          # You may remove this line if you want to manage the configuration yourself.
-          static_site_generator: other
+        uses: actions/configure-pages@v4
 
       - name: Install dependencies for main project
         run: yarn install --frozen-lockfile
