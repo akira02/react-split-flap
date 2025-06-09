@@ -1,0 +1,9 @@
+{
+  "version": "v1",
+  "packages": {
+    "react-split-flap": {
+      "signature": "4130c9578952c1eb2987f8c0bdd2a299",
+      "file": true
+    }
+  }
+}
