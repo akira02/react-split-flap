@@ -1,27 +1,28 @@
 # React Split Flap
 
-一個模擬經典翻頁顯示器效果的 React 組件，靈感來自火車站和機場的顯示牌。
+[![NPM](https://img.shields.io/npm/v/react-split-flap.svg)](https://www.npmjs.com/package/react-split-flap)
 
-## 特色功能
+A React component that simulates the classic split-flap display effect, inspired by train stations and airport displays.
 
-- 🎯 **逼真的翻頁動畫** - 模擬真實的機械翻頁效果
-- 🎨 **多種主題** - 內建淺色和深色主題
-- 📏 **多種尺寸** - 從小型到特大型的尺寸選擇
-- ⚙️ **高度可自訂** - 支援自訂字符集、動畫速度等
-- 🔧 **TypeScript 支援** - 完整的型別定義
-- 📱 **響應式設計** - 適配各種螢幕尺寸
-- ✨ **零配置** - CSS 樣式自動注入，無需手動導入
-- 🏗️ **模組化設計** - 每個組件都有對應的 CSS 文件
+[Demo](https://akira02.github.io/react-split-flap)
 
-## 安裝
+## Features
+
+- 🎯 **Realistic Flip Animation** - Simulates authentic mechanical flipping effects
+- 🎨 **Multiple Themes** - Built-in light and dark themes
+- 📏 **Various Sizes** - From small to extra-large size options
+- ⚙️ **Highly Customizable** - Support for custom character sets, animation speed, etc.
+- 🔧 **TypeScript Support** - Complete type definitions
+
+## Installation
 
 ```bash
 npm install react-split-flap
-# 或
+# or
 yarn add react-split-flap
 ```
 
-## 基本使用
+## Basic Usage
 
 ```tsx
 import React from 'react'
@@ -33,48 +34,48 @@ function App() {
 }
 ```
 
-## API 參考
+## API Reference
 
 ### SplitFlap Props
 
-| 屬性        | 型別                                 | 預設值        | 說明                 |
-| ----------- | ------------------------------------ | ------------- | -------------------- |
-| `value`     | `string`                             | -             | 要顯示的值           |
-| `length`    | `number`                             | -             | 顯示的位數           |
-| `chars`     | `string`                             | `Presets.NUM` | 可用的字符集         |
-| `words`     | `string[]`                           | -             | 使用單詞而非單字符   |
-| `padChar`   | `string`                             | `' '`         | 填充字符             |
-| `padMode`   | `'auto' \| 'start' \| 'end'`         | `'auto'`      | 填充模式             |
-| `timing`    | `number`                             | `30`          | 動畫間隔時間（毫秒） |
-| `hinge`     | `boolean`                            | `true`        | 是否顯示鉸鏈線       |
-| `className` | `string`                             | `''`          | CSS 類名             |
-| `style`     | `React.CSSProperties`                | -             | 內聯樣式             |
-| `render`    | `(children: ReactNode) => ReactNode` | -             | 自訂渲染函數         |
+| Property    | Type                                 | Default       | Description                            |
+| ----------- | ------------------------------------ | ------------- | -------------------------------------- |
+| `value`     | `string`                             | -             | Value to display                       |
+| `length`    | `number`                             | -             | Number of digits to display            |
+| `chars`     | `string`                             | `Presets.NUM` | Available character set                |
+| `words`     | `string[]`                           | -             | Use words instead of single characters |
+| `padChar`   | `string`                             | `' '`         | Padding character                      |
+| `padMode`   | `'auto' \| 'start' \| 'end'`         | `'auto'`      | Padding mode                           |
+| `timing`    | `number`                             | `30`          | Animation interval (milliseconds)      |
+| `hinge`     | `boolean`                            | `true`        | Whether to show hinge line             |
+| `className` | `string`                             | `''`          | CSS class name                         |
+| `style`     | `React.CSSProperties`                | -             | Inline styles                          |
+| `render`    | `(children: ReactNode) => ReactNode` | -             | Custom render function                 |
 
-### 預設字符集
+### Preset Character Sets
 
 ```tsx
 import { Presets } from 'react-split-flap'
 
-// 數字字符集（包含空格）
+// Numeric character set (includes space)
 Presets.NUM = ' 0123456789'
 
-// 字母數字字符集
+// Alphanumeric character set
 Presets.ALPHANUM = ' ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789'
 ```
 
-### 內建主題
+### Built-in Themes
 
-- `small` - 小尺寸 (20px)
-- `medium` - 中等尺寸 (36px)
-- `large` - 大尺寸 (54px)
-- `xlarge` - 特大尺寸 (84px)
-- `light` - 淺色主題
-- `dark` - 深色主題
+- `small` - Small size (20px)
+- `medium` - Medium size (36px)
+- `large` - Large size (54px)
+- `xlarge` - Extra large size (84px)
+- `light` - Light theme
+- `dark` - Dark theme
 
-## 使用範例
+## Usage Examples
 
-### 數字時鐘
+### Digital Clock
 
 ```tsx
 import React, { useState, useEffect } from 'react'
@@ -118,7 +119,7 @@ function DigitalClock() {
 }
 ```
 
-### 計數器
+### Counter
 
 ```tsx
 import React, { useState } from 'react'
@@ -130,13 +131,13 @@ function Counter() {
   return (
     <div>
       <SplitFlap value={count.toString()} chars={Presets.NUM} length={3} className="medium light" padMode="start" />
-      <button onClick={() => setCount(count + 1)}>增加</button>
+      <button onClick={() => setCount(count + 1)}>Increment</button>
     </div>
   )
 }
 ```
 
-### 文字輪播
+### Text Carousel
 
 ```tsx
 import React, { useState, useEffect } from 'react'
@@ -160,41 +161,123 @@ function TextCarousel() {
 }
 ```
 
-## 開發
+## LongFlap Component
 
-### 本地開發
+The `LongFlap` component is designed for scenarios where you need to display complex ReactNode components in a flap display, with ID-based switching. This is perfect for content that includes icons, styled text, or any other React components.
+
+### LongFlap Props
+
+| Property     | Type                                                  | Default     | Description                               |
+| ------------ | ----------------------------------------------------- | ----------- | ----------------------------------------- |
+| `flaps`      | `Array<{id: string \| number, component: ReactNode}>` | -           | Array of flap items with ID and component |
+| `displayId`  | `string \| number`                                    | -           | Current display ID to show                |
+| `digitWidth` | `number`                                              | -           | Custom width for the flap (in pixels)     |
+| `timing`     | `number`                                              | `60`        | Animation timing (milliseconds)           |
+| `hinge`      | `boolean`                                             | `true`      | Whether to show hinge line                |
+| `theme`      | `'default' \| 'light' \| 'dark'`                      | `'default'` | Theme variant                             |
+| `size`       | `'small' \| 'medium' \| 'large' \| 'xlarge'`          | `'medium'`  | Size variant                              |
+| `className`  | `string`                                              | `''`        | CSS class name                            |
+| `style`      | `React.CSSProperties`                                 | -           | Inline styles                             |
+| `render`     | `(children: ReactNode) => ReactNode`                  | -           | Custom render function                    |
+
+### LongFlap Usage Example
+
+```tsx
+import React, { useState, useEffect } from 'react'
+import { LongFlap } from 'react-split-flap'
+
+function WeatherDisplay() {
+  const [currentWeather, setCurrentWeather] = useState('sunny')
+
+  const weatherFlaps = [
+    {
+      id: 'sunny',
+      component: (
+        <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+          <span style={{ fontSize: '24px' }}>☀️</span>
+          <span>Sunny</span>
+        </div>
+      ),
+    },
+    {
+      id: 'cloudy',
+      component: (
+        <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+          <span style={{ fontSize: '24px' }}>☁️</span>
+          <span>Cloudy</span>
+        </div>
+      ),
+    },
+    {
+      id: 'rainy',
+      component: (
+        <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+          <span style={{ fontSize: '24px' }}>🌧️</span>
+          <span>Rainy</span>
+        </div>
+      ),
+    },
+  ]
+
+  // Auto cycle through weather states
+  useEffect(() => {
+    const weatherIds = ['sunny', 'cloudy', 'rainy']
+    let currentIndex = 0
+
+    const interval = setInterval(() => {
+      currentIndex = (currentIndex + 1) % weatherIds.length
+      setCurrentWeather(weatherIds[currentIndex])
+    }, 3000)
+
+    return () => clearInterval(interval)
+  }, [])
+
+  return (
+    <LongFlap flaps={weatherFlaps} displayId={currentWeather} digitWidth={150} timing={80} size="large" theme="dark" />
+  )
+}
+```
+
+### When to use LongFlap vs SplitFlap
+
+- **Use SplitFlap** when displaying strings or simple text with character-by-character flipping
+- **Use LongFlap** when you need:
+  - Complex ReactNode components (icons + text, styled content, etc.)
+  - ID-based switching between predefined states
+  - Single flap displaying rich content
+  - Custom rendering of complex elements
+
+## Development
+
+### Local Development
 
 ```bash
-# 克隆專案
+# Clone the project
 git clone <repository-url>
 cd react-split-flap
 
-# 安裝依賴
+# Install dependencies
 yarn install
 
-# 建構套件
+# Build the package
 yarn build
 
-# 啟動 demo
+# Start demo
 cd demo
 yarn install
 yarn dev
 ```
 
-### 建構
+### Build
 
 ```bash
 yarn build
 ```
 
-## 授權
+## License
 
 MIT License
 
-## 貢獻
+## Contributing
 
-歡迎提交 Issue 和 Pull Request！
-
----
-
-Built with ❤️ using React & TypeScript
+Issues and Pull Requests are welcome!

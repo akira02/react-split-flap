@@ -360,3 +360,74 @@ footer {
 .split-flap-digit.animating {
   will-change: transform, opacity;
 }
+
+/* LongFlap Demo specific styles */
+.weather-flap {
+  margin: 2rem 0;
+}
+
+.weather-flap .split-flap-digit {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.button-group {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin-top: 0.5rem;
+}
+
+.button-group button {
+  padding: 0.5rem 1rem;
+  border: 2px solid #e2e8f0;
+  border-radius: 6px;
+  background: white;
+  color: #4a5568;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-size: 0.9rem;
+  font-weight: 500;
+}
+
+.button-group button:hover {
+  border-color: #667eea;
+  background: #f7fafc;
+  transform: translateY(-1px);
+}
+
+.button-group button.active {
+  background: #667eea;
+  color: white;
+  border-color: #667eea;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 8px rgba(102, 126, 234, 0.3);
+}
+
+.code-example {
+  background: #2d3748;
+  color: #e2e8f0;
+  padding: 1.5rem;
+  border-radius: 8px;
+  margin-top: 2rem;
+  overflow-x: auto;
+}
+
+.code-example h3 {
+  color: #81e6d9;
+  margin-bottom: 1rem;
+  font-size: 1rem;
+}
+
+.code-example pre {
+  margin: 0;
+  font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
+  font-size: 0.85rem;
+  line-height: 1.5;
+}
+
+.code-example code {
+  color: #e2e8f0;
+}

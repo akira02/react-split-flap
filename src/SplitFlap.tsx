@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useCallback } from 'react'
 import { Presets } from './presets'
-import styles from './SplitFlap.css'
+import './SplitFlap.css'
 
 export interface SplitFlapProps {
   /**
@@ -57,6 +57,52 @@ export interface SplitFlapProps {
   render?: (children: React.ReactNode) => React.ReactNode
 }
 
+export interface LongFlapProps {
+  /**
+   * Array of flap items with id and component
+   */
+  flaps: Array<{
+    id: string | number
+    component: React.ReactNode
+  }>
+  /**
+   * Current display ID to show
+   */
+  displayId: string | number
+  /**
+   * Custom width for the flap (in pixels)
+   */
+  digitWidth?: number
+  /**
+   * Animation timing in milliseconds
+   */
+  timing?: number
+  /**
+   * Show hinge line
+   */
+  hinge?: boolean
+  /**
+   * Theme variant
+   */
+  theme?: 'default' | 'light' | 'dark'
+  /**
+   * Size variant
+   */
+  size?: 'small' | 'medium' | 'large' | 'xlarge'
+  /**
+   * CSS class name
+   */
+  className?: string
+  /**
+   * CSS styles
+   */
+  style?: React.CSSProperties
+  /**
+   * Custom render function
+   */
+  render?: (children: React.ReactNode) => React.ReactNode
+}
+
 // Individual flap component
 interface FlapProps {
   children: React.ReactNode
@@ -67,19 +113,14 @@ interface FlapProps {
 }
 
 const Flap: React.FC<FlapProps> = ({ bottom, animated, final, hinge, children }) => {
-  const classes = [
-    styles['split-flap-part'],
-    bottom ? styles.bottom : styles.top,
-    animated ? styles.animated : '',
-    final ? styles.final : '',
-  ]
+  const classes = ['split-flap-part', bottom ? 'bottom' : 'top', animated ? 'animated' : '', final ? 'final' : '']
     .filter(Boolean)
     .join(' ')
 
   return (
     <div className={classes}>
-      <span className={styles['split-flap-char']}>{children}</span>
-      {hinge && <div className={styles['split-flap-hinge']} data-kind="hinge" />}
+      <span className="split-flap-char">{children}</span>
+      {hinge && <div className="split-flap-hinge" data-kind="hinge" />}
     </div>
   )
 }
@@ -98,7 +139,7 @@ const FlapDigit: React.FC<FlapDigitProps> = ({ value, prevValue, final, mode, hi
   const digitStyle = digitWidth ? { width: `${digitWidth}px` } : {}
 
   return (
-    <div className={styles['split-flap-digit']} data-kind="digit" data-mode={mode} style={digitStyle}>
+    <div className="split-flap-digit" data-kind="digit" data-mode={mode} style={digitStyle}>
       {/* Static top half showing current value */}
       <Flap hinge={hinge}>{value}</Flap>
 
@@ -364,11 +405,11 @@ const SplitFlap: React.FC<SplitFlapProps> = ({
   }, [displayValue, chars, mode, length, padChar, timing, hinge, digitWidth, value])
 
   const displayClasses = [
-    styles['split-flap-display'],
-    theme !== 'default' ? styles[theme] : '',
-    styles[size], // Always include the size class
-    mode === 'custom' ? styles['custom-mode'] : '',
-    length === 1 ? styles['words-mode'] : '',
+    'split-flap-display',
+    theme !== 'default' ? theme : '',
+    size, // Always include the size class
+    mode === 'custom' ? 'custom-mode' : '',
+    length === 1 ? 'words-mode' : '',
     className,
   ]
     .filter(Boolean)
@@ -383,4 +424,52 @@ const SplitFlap: React.FC<SplitFlapProps> = ({
   return render ? render(content) : content
 }
 
+// LongFlap component for single flap with ReactNode support
+const LongFlap: React.FC<LongFlapProps> = ({
+  flaps,
+  displayId,
+  digitWidth,
+  timing = 60,
+  hinge = true,
+  theme = 'default',
+  size = 'medium',
+  className = '',
+  style,
+  render,
+}) => {
+  // Create stack from flap components
+  const flapStack = flaps.map((flap) => flap.component)
+
+  // Find the current display value
+  const currentFlap = flaps.find((flap) => flap.id === displayId)
+  const currentValue = currentFlap ? currentFlap.component : flaps[0]?.component || ''
+
+  const displayClasses = [
+    'split-flap-display',
+    theme !== 'default' ? theme : '',
+    size,
+    'custom-mode',
+    'words-mode',
+    className,
+  ]
+    .filter(Boolean)
+    .join(' ')
+
+  const content = (
+    <div className={displayClasses} style={style} aria-hidden="true" aria-label={String(displayId)}>
+      <FlapStack
+        stack={flapStack}
+        value={currentValue}
+        mode="words"
+        timing={timing}
+        hinge={hinge}
+        digitWidth={digitWidth}
+      />
+    </div>
+  )
+
+  return render ? render(content) : content
+}
+
 export default SplitFlap
+export { LongFlap }

@@ -161,6 +161,92 @@ function TextCarousel() {
 }
 ```
 
+## LongFlap Component
+
+The `LongFlap` component is designed for scenarios where you need to display complex ReactNode components in a flap display, with ID-based switching. This is perfect for content that includes icons, styled text, or any other React components.
+
+### LongFlap Props
+
+| Property     | Type                                                  | Default     | Description                               |
+| ------------ | ----------------------------------------------------- | ----------- | ----------------------------------------- |
+| `flaps`      | `Array<{id: string \| number, component: ReactNode}>` | -           | Array of flap items with ID and component |
+| `displayId`  | `string \| number`                                    | -           | Current display ID to show                |
+| `digitWidth` | `number`                                              | -           | Custom width for the flap (in pixels)     |
+| `timing`     | `number`                                              | `60`        | Animation timing (milliseconds)           |
+| `hinge`      | `boolean`                                             | `true`      | Whether to show hinge line                |
+| `theme`      | `'default' \| 'light' \| 'dark'`                      | `'default'` | Theme variant                             |
+| `size`       | `'small' \| 'medium' \| 'large' \| 'xlarge'`          | `'medium'`  | Size variant                              |
+| `className`  | `string`                                              | `''`        | CSS class name                            |
+| `style`      | `React.CSSProperties`                                 | -           | Inline styles                             |
+| `render`     | `(children: ReactNode) => ReactNode`                  | -           | Custom render function                    |
+
+### LongFlap Usage Example
+
+```tsx
+import React, { useState, useEffect } from 'react'
+import { LongFlap } from 'react-split-flap'
+
+function WeatherDisplay() {
+  const [currentWeather, setCurrentWeather] = useState('sunny')
+
+  const weatherFlaps = [
+    {
+      id: 'sunny',
+      component: (
+        <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+          <span style={{ fontSize: '24px' }}>☀️</span>
+          <span>Sunny</span>
+        </div>
+      ),
+    },
+    {
+      id: 'cloudy',
+      component: (
+        <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+          <span style={{ fontSize: '24px' }}>☁️</span>
+          <span>Cloudy</span>
+        </div>
+      ),
+    },
+    {
+      id: 'rainy',
+      component: (
+        <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+          <span style={{ fontSize: '24px' }}>🌧️</span>
+          <span>Rainy</span>
+        </div>
+      ),
+    },
+  ]
+
+  // Auto cycle through weather states
+  useEffect(() => {
+    const weatherIds = ['sunny', 'cloudy', 'rainy']
+    let currentIndex = 0
+
+    const interval = setInterval(() => {
+      currentIndex = (currentIndex + 1) % weatherIds.length
+      setCurrentWeather(weatherIds[currentIndex])
+    }, 3000)
+
+    return () => clearInterval(interval)
+  }, [])
+
+  return (
+    <LongFlap flaps={weatherFlaps} displayId={currentWeather} digitWidth={150} timing={80} size="large" theme="dark" />
+  )
+}
+```
+
+### When to use LongFlap vs SplitFlap
+
+- **Use SplitFlap** when displaying strings or simple text with character-by-character flipping
+- **Use LongFlap** when you need:
+  - Complex ReactNode components (icons + text, styled content, etc.)
+  - ID-based switching between predefined states
+  - Single flap displaying rich content
+  - Custom rendering of complex elements
+
 ## Development
 
 ### Local Development
