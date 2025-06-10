@@ -72,6 +72,10 @@ export interface LongFlapProps {
    */
   digitWidth?: number
   /**
+   * Custom height for the flap (in pixels)
+   */
+  digitHeight?: number
+  /**
    * Animation timing in milliseconds
    */
   timing?: number

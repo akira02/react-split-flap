@@ -187,6 +187,10 @@
   font-size: 84px;
 }
 
+.split-flap-display.long-flap-mode {
+  font-size: inherit;
+}
+
 /* Enhanced visual effects */
 .split-flap-digit::before {
   content: '';
@@ -267,20 +271,17 @@
 }
 
 /* LongFlap custom mode styles */
-.split-flap-display.custom-mode .split-flap-digit {
+.split-flap-display.long-flap-mode .split-flap-digit {
   width: var(--digit-width, auto);
   min-width: var(--digit-width, auto);
+  height: var(--digit-height, auto);
+  min-height: var(--digit-height, auto);
 }
 
-.split-flap-display.custom-mode .split-flap-char {
+.split-flap-display.long-flap-mode .split-flap-char {
   width: 100%;
   height: 100%;
   display: flex;
   align-items: center;
   justify-content: center;
-}
-
-.split-flap-display.custom-mode .split-flap-char > * {
-  width: 100%;
-  height: 100%;
 }

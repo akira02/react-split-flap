@@ -16,13 +16,13 @@ const FlapDigit: React.FC<FlapDigitProps> = ({ value, prevValue, final, mode, hi
       </Flap>
 
       {/* Animated top half flipping from previous to current */}
-      <Flap key={`top-${String(prevValue)}`} animated final={final} hinge={hinge}>
+      <Flap key={`top-${(prevValue as any)?.key || String(prevValue)}`} animated final={final} hinge={hinge}>
         {prevValue}
       </Flap>
 
       {/* Animated bottom half appearing after top half flips */}
       {final && (
-        <Flap key={`bottom-${String(value)}`} bottom animated final hinge={hinge}>
+        <Flap key={`bottom-${(value as any)?.key || String(value)}`} bottom animated final hinge={hinge}>
           {value}
         </Flap>
       )}

@@ -1,48 +1,48 @@
 import { useState } from 'react'
 import { LongFlap } from 'react-split-flap'
 
+// Sample flaps with ReactNode components
+const weatherFlaps = [
+  {
+    id: 'weather-sunny',
+    component: (
+      <div style={{ display: 'flex', alignItems: 'center', gap: '8px', fontSize: '32px' }}>
+        <span>☀️</span>
+        <span>Sunny</span>
+      </div>
+    ),
+  },
+  {
+    id: 'weather-cloudy',
+    component: (
+      <div style={{ display: 'flex', alignItems: 'center', gap: '8px', fontSize: '32px' }}>
+        <span>☁️</span>
+        <span>Cloudy</span>
+      </div>
+    ),
+  },
+  {
+    id: 'weather-rainy',
+    component: (
+      <div style={{ display: 'flex', alignItems: 'center', gap: '8px', fontSize: '32px' }}>
+        <span>🌧️</span>
+        <span>Rainy</span>
+      </div>
+    ),
+  },
+  {
+    id: 'weather-snowy',
+    component: (
+      <div style={{ display: 'flex', alignItems: 'center', gap: '8px', fontSize: '32px' }}>
+        <span>❄️</span>
+        <span>Snowy</span>
+      </div>
+    ),
+  },
+]
+
 const LongFlapDemo = () => {
   const [currentId, setCurrentId] = useState<string>('weather-sunny')
-
-  // Sample flaps with ReactNode components
-  const weatherFlaps = [
-    {
-      id: 'weather-sunny',
-      component: (
-        <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-          <span style={{ fontSize: '24px' }}>☀️</span>
-          <span>Sunny</span>
-        </div>
-      ),
-    },
-    {
-      id: 'weather-cloudy',
-      component: (
-        <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-          <span style={{ fontSize: '24px' }}>☁️</span>
-          <span>Cloudy</span>
-        </div>
-      ),
-    },
-    {
-      id: 'weather-rainy',
-      component: (
-        <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-          <span style={{ fontSize: '24px' }}>🌧️</span>
-          <span>Rainy</span>
-        </div>
-      ),
-    },
-    {
-      id: 'weather-snowy',
-      component: (
-        <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-          <span style={{ fontSize: '24px' }}>❄️</span>
-          <span>Snowy</span>
-        </div>
-      ),
-    },
-  ]
 
   return (
     <section className="demo-section">

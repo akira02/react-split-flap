@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { Fragment } from 'react'
 import { LongFlapProps } from './types'
 import { FlapStack } from './components'
 
@@ -6,6 +6,7 @@ const LongFlap: React.FC<LongFlapProps> = ({
   flaps,
   displayId,
   digitWidth,
+  digitHeight = 50,
   timing = 60,
   hinge = true,
   theme = 'default',
@@ -15,7 +16,7 @@ const LongFlap: React.FC<LongFlapProps> = ({
   render,
 }) => {
   // Memoize the stack to maintain stable references
-  const flapStack = React.useMemo(() => flaps.map((f) => f.component), [flaps])
+  const flapStack = React.useMemo(() => flaps.map((f) => <Fragment key={f.id}>{f.component}</Fragment>), [flaps])
 
   // Memoize the current index to maintain stable reference
   const currentIndex = React.useMemo(() => {
@@ -23,14 +24,7 @@ const LongFlap: React.FC<LongFlapProps> = ({
     return flapIndex !== -1 ? flapIndex : 0
   }, [flaps, displayId])
 
-  const displayClasses = [
-    'split-flap-display',
-    theme !== 'default' ? theme : '',
-    size,
-    'custom-mode',
-    'words-mode',
-    className,
-  ]
+  const displayClasses = ['split-flap-display', theme !== 'default' ? theme : '', size, 'long-flap-mode', className]
     .filter(Boolean)
     .join(' ')
 
@@ -38,7 +32,8 @@ const LongFlap: React.FC<LongFlapProps> = ({
   const longFlapStyle = {
     ...style,
     '--digit-width': digitWidth ? `${digitWidth}px` : 'auto',
-  } as React.CSSProperties & { '--digit-width': string }
+    '--digit-height': digitHeight ? `${digitHeight}px` : 'auto',
+  } as React.CSSProperties & { '--digit-width': string; '--digit-height': string }
 
   const content = (
     <div className={displayClasses} style={longFlapStyle} aria-hidden="true">

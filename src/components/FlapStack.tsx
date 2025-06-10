@@ -24,21 +24,7 @@ const FlapStack: React.FC<FlapStackProps> = ({ stack, value, timing, mode, hinge
     const target = Math.max(0, Math.min(value, stack.length - 1))
     const currentStack = stack
 
-    let { current, previous } = cursor
-
-    const increment = () => {
-      previous = current
-      current = current >= currentStack.length - 1 ? 0 : current + 1
-
-      setCursor({
-        current,
-        previous,
-        target,
-      })
-    }
-
-    // Start the animation
-    increment()
+    let { current } = cursor
 
     // Continue animation if not at target
     if (current !== target) {
@@ -50,7 +36,6 @@ const FlapStack: React.FC<FlapStackProps> = ({ stack, value, timing, mode, hinge
           if (newCurrent === target) {
             clearInterval(timer)
           }
-
           return {
             current: newCurrent,
             previous: newPrevious,
@@ -59,7 +44,9 @@ const FlapStack: React.FC<FlapStackProps> = ({ stack, value, timing, mode, hinge
         })
       }, timing)
 
-      return () => clearInterval(timer)
+      return () => {
+        clearInterval(timer)
+      }
     }
   }, [stack, value, timing])
 
