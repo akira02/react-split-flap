@@ -71,6 +71,26 @@ const TRAIN_TYPE_FLAPS = KEIKYU_TRAIN_TYPES.map((trainType, index) => ({
   ),
 }))
 
+// Generate bikou (remarks) flaps
+const BIKOU_FLAPS = Array.from({ length: 60 }, (_, index) => ({
+  id: index.toString(),
+  component: (
+    <img
+      src={`/images/kawasaki/bikou/${index}.PNG`}
+      alt={`Bikou ${index}`}
+      style={{
+        width: '100%',
+        height: '100%',
+        objectFit: 'contain',
+        display: 'block',
+      }}
+      onError={(e) => {
+        e.currentTarget.style.display = 'none'
+      }}
+    />
+  ),
+}))
+
 const DESTINATION_FLAPS = Array.from({ length: 60 }, (_, index) => ({
   id: index.toString(),
   component: (
@@ -89,12 +109,14 @@ const TrainDemo = () => {
   const [currentTrainType, setCurrentTrainType] = useState(0)
   const [currentDestination, setCurrentDestination] = useState(0)
   const [currentSeq, setCurrentSeq] = useState(0)
+  const [currentBikou, setCurrentBikou] = useState(0)
 
   useEffect(() => {
     const trainTypeInterval = setInterval(() => {
       setCurrentTrainType(Math.floor(Math.random() * KEIKYU_TRAIN_TYPES.length))
       setCurrentDestination(Math.floor(Math.random() * KEIKYU_DESTINATIONS.length))
       setCurrentSeq(Math.floor(Math.random() * SEQ.length))
+      setCurrentBikou(Math.floor(Math.random() * 60))
     }, 4000)
 
     return () => {
@@ -135,6 +157,15 @@ const TrainDemo = () => {
             size="large"
             theme="dark"
             timing={45}
+          />
+          <LongFlap
+            key="bikou"
+            flaps={BIKOU_FLAPS}
+            displayId={currentBikou.toString()}
+            digitWidth={350}
+            size="large"
+            theme="dark"
+            timing={42}
           />
         </div>
       </div>
