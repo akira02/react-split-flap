@@ -1,6 +1,10 @@
 # React Split Flap
 
+[![NPM](https://img.shields.io/npm/v/react-split-flap.svg)](https://www.npmjs.com/package/react-split-flap)
+
 A React component that simulates the classic split-flap display effect, inspired by train stations and airport displays.
+
+[Demo](https://akira02.github.io/react-split-flap)
 
 ## Features
 
