@@ -17,10 +17,10 @@ const LongFlap: React.FC<LongFlapProps> = ({
   // Memoize the stack to maintain stable references
   const flapStack = React.useMemo(() => flaps.map((f) => f.component), [flaps])
 
-  // Memoize the current value to maintain stable reference
-  const currentValue = React.useMemo(() => {
-    const currentFlap = flaps.find((f) => f.id === displayId)
-    return currentFlap ? currentFlap.component : flaps.length > 0 ? flaps[0].component : ''
+  // Memoize the current index to maintain stable reference
+  const currentIndex = React.useMemo(() => {
+    const flapIndex = flaps.findIndex((f) => f.id === displayId)
+    return flapIndex !== -1 ? flapIndex : 0
   }, [flaps, displayId])
 
   const displayClasses = [
@@ -41,11 +41,10 @@ const LongFlap: React.FC<LongFlapProps> = ({
   } as React.CSSProperties & { '--digit-width': string }
 
   const content = (
-    <div className={displayClasses} style={longFlapStyle} aria-hidden="true" aria-label={String(displayId)}>
+    <div className={displayClasses} style={longFlapStyle} aria-hidden="true">
       <FlapStack
-        key={displayId} // Force re-mount when displayId changes
         stack={flapStack}
-        value={currentValue}
+        value={currentIndex}
         timing={timing}
         mode="words"
         hinge={hinge}

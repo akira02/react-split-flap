@@ -56,17 +56,17 @@ const SplitFlap: React.FC<SplitFlapProps> = ({
     setDisplayValue(processedValue)
   }, [value, length, padChar, padMode, mode])
 
-  // Helper function to find matching char in stack
-  const findCharInStack = (char: string): string => {
+  // Helper function to find index of char in stack
+  const findCharIndexInStack = (char: string): number => {
     // First try exact match
-    const exactMatch = chars.find((item) => item === char)
+    const index = chars.findIndex((item) => item === char)
 
-    if (exactMatch !== undefined) {
-      return exactMatch
+    if (index !== -1) {
+      return index
     }
 
-    // If no exact match, return the original char (will be added to stack dynamically)
-    return char
+    // If no exact match, return 0 (first item in stack)
+    return 0
   }
 
   const renderDigits = useCallback(() => {
@@ -76,13 +76,13 @@ const SplitFlap: React.FC<SplitFlapProps> = ({
     if (length === 1) {
       // Convert to uppercase for string chars
       const singleValue = value.toUpperCase()
-      const stackValue = findCharInStack(singleValue)
+      const stackIndex = findCharIndexInStack(singleValue)
 
       digits.push(
         <FlapStack
           key={0}
           stack={chars}
-          value={stackValue}
+          value={stackIndex}
           mode="words"
           timing={timing}
           hinge={hinge}
@@ -93,13 +93,13 @@ const SplitFlap: React.FC<SplitFlapProps> = ({
       // When length>1, display each character separately
       for (let i = 0; i < length; i++) {
         const char = displayValue[i] || padChar
-        const stackValue = findCharInStack(char)
+        const stackIndex = findCharIndexInStack(char)
 
         digits.push(
           <FlapStack
             key={i}
             stack={chars}
-            value={stackValue}
+            value={stackIndex}
             mode={mode}
             timing={timing}
             hinge={hinge}

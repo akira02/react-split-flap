@@ -20,32 +20,9 @@ const FlapStack: React.FC<FlapStackProps> = ({ stack, value, timing, mode, hinge
 
   // Animation sequence when value changes
   useEffect(() => {
-    // Create extended stack if value is not in original stack
-    const extendedStack = (() => {
-      const index = stack.findIndex((item) => {
-        // Handle exact match for strings
-        if (typeof item === 'string' && typeof value === 'string') {
-          return item === value
-        }
-        // For React nodes, use reference equality
-        if (typeof item === 'object' && item !== null && value !== null) {
-          return item === value
-        }
-        // Handle ReactNode comparison by converting to strings
-        return String(item) === String(value)
-      })
-
-      // If value is found in stack, use original stack
-      if (index !== -1) {
-        return { stack, target: index }
-      }
-
-      // If value not found, add it to the end and make it the target
-      const newStack = [...stack, value]
-      return { stack: newStack, target: newStack.length - 1 }
-    })()
-
-    const { stack: currentStack, target } = extendedStack
+    // Validate index and set target
+    const target = Math.max(0, Math.min(value, stack.length - 1))
+    const currentStack = stack
 
     let { current, previous } = cursor
 
@@ -88,30 +65,10 @@ const FlapStack: React.FC<FlapStackProps> = ({ stack, value, timing, mode, hinge
 
   const { current, previous, target } = cursor
 
-  // Use the extended stack for rendering
-  const { stack: renderStack } = (() => {
-    const index = stack.findIndex((item) => {
-      if (typeof item === 'string' && typeof value === 'string') {
-        return item === value
-      }
-      // For React nodes, use reference equality
-      if (typeof item === 'object' && item !== null && value !== null) {
-        return item === value
-      }
-      return String(item) === String(value)
-    })
-
-    if (index !== -1) {
-      return { stack }
-    }
-
-    return { stack: [...stack, value] }
-  })()
-
   return (
     <FlapDigit
-      value={renderStack[current] || ''}
-      prevValue={renderStack[previous] || ''}
+      value={stack[current] || ''}
+      prevValue={stack[previous] || ''}
       final={current === target}
       mode={mode}
       hinge={hinge}

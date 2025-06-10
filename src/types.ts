@@ -120,7 +120,7 @@ export interface FlapDigitProps {
 
 export interface FlapStackProps {
   stack: (string | React.ReactNode)[]
-  value: string | React.ReactNode
+  value: number // Changed to index of the stack
   timing: number
   mode: 'num' | 'alpha' | 'custom' | 'words'
   hinge: boolean
