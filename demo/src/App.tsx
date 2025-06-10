@@ -25,6 +25,7 @@ function App() {
         <p>{t('subtitle')}</p>
 
         <ClockDemo />
+        <TrainDemo />
         <CounterDemo />
         <CarouselDemo />
         <AirportDemo />
@@ -32,7 +33,6 @@ function App() {
         <StationsDemo />
         <InputDemo />
         <ThemesDemo />
-        <TrainDemo />
         <NoHingeDemo />
         <SpecialCharactersDemo />
         <LongFlapDemo />

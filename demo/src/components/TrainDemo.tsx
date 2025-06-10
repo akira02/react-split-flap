@@ -56,7 +56,7 @@ const TRAIN_TYPE_FLAPS = KEIKYU_TRAIN_TYPES.map((trainType, index) => ({
   id: index.toString(),
   component: (
     <img
-      src={`/images/kawasaki/kind/${trainType}.PNG`}
+      src={`./images/kawasaki/kind/${trainType}.PNG`}
       alt={`Train type ${trainType}`}
       style={{
         width: '100%',
@@ -76,7 +76,7 @@ const BIKOU_FLAPS = Array.from({ length: 60 }, (_, index) => ({
   id: index.toString(),
   component: (
     <img
-      src={`/images/kawasaki/bikou/${index}.PNG`}
+      src={`./images/kawasaki/bikou/${index}.PNG`}
       alt={`Bikou ${index}`}
       style={{
         width: '100%',
@@ -95,7 +95,7 @@ const DESTINATION_FLAPS = Array.from({ length: 60 }, (_, index) => ({
   id: index.toString(),
   component: (
     <img
-      src={`/images/kawasaki/dest/${index}.PNG`}
+      src={`./images/kawasaki/dest/${index}.PNG`}
       alt={`Destination ${index}`}
       style={{ width: '200px', height: '50px' }}
       onError={(e) => {
