@@ -1,0 +1,48 @@
+{
+  "title": "React Split Flap Display",
+  "subtitle": "Classic split-flap display effect inspired by train stations and airport displays",
+  "sections": {
+    "clock": {
+      "title": "Real-time Clock",
+      "description": "Digital clock that updates every second, demonstrating continuous number transitions"
+    },
+    "counter": {
+      "title": "Number Counter",
+      "description": "Auto-incrementing counter demonstrating number scrolling effects"
+    },
+    "carousel": {
+      "title": "Text Carousel",
+      "description": "Rotating city names demonstrating letter transition effects"
+    },
+    "airport": {
+      "title": "Airport Codes",
+      "description": "Simulating airport display board three-letter code transitions"
+    },
+    "temperature": {
+      "title": "Temperature Display",
+      "description": "Simulating thermometer value changes with degree symbol"
+    },
+    "stations": {
+      "title": "🚃 Japanese Train Stations",
+      "description": "Simulating JR Yamanote Line station displays, auto-rotating through major Tokyo stations"
+    },
+    "input": {
+      "title": "Interactive Input",
+      "description": "Type freely and see real-time split-flap effects",
+      "placeholder": "Enter text..."
+    },
+    "themes": {
+      "title": "Theme Showcase",
+      "description": "Different sizes and theme display effects",
+      "small": "🔸 Small Dark",
+      "medium": "⚪ Medium Light",
+      "large": "🔷 Large Dark",
+      "xlarge": "⭐ XLarge Light"
+    }
+  },
+  "language": {
+    "switch": "Language",
+    "english": "English",
+    "chinese": "繁體中文"
+  }
+}

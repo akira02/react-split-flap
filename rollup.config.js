@@ -23,10 +23,10 @@ export default {
     resolve(),
     commonjs(),
     postcss({
-      extract: 'index.css',
+      modules: true,
       minimize: true,
-      modules: false,
-      inject: false,
+      inject: true,
+      extract: false,
     }),
     typescript({
       tsconfig: './tsconfig.json',

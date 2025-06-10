@@ -1,10 +1,12 @@
 import { useState, useEffect } from 'react'
+import { useTranslation } from 'react-i18next'
 import { SplitFlap, Presets } from 'react-split-flap'
 import { JapaneseStations } from './presets'
-import 'react-split-flap/dist/index.css'
+import LanguageSwitcher from './components/LanguageSwitcher'
 import './App.css'
 
 function App() {
+  const { t } = useTranslation()
   const [timeValue, setTimeValue] = useState('')
   const [numberValue, setNumberValue] = useState('000')
   const [textValue, setTextValue] = useState('HELLO')
@@ -110,43 +112,44 @@ function App() {
 
   return (
     <div className="app">
+      <LanguageSwitcher />
       <div className="container">
-        <h1>React Split Flap Display</h1>
-        <p>經典的翻頁顯示器效果，靈感來自火車站和機場的顯示牌</p>
+        <h1>{t('title')}</h1>
+        <p>{t('subtitle')}</p>
 
         <div className="demo-section">
-          <h2>即時時鐘 - Real-time Clock</h2>
-          <p>每秒更新的數位時鐘，展示連續數字變化效果</p>
+          <h2>{t('sections.clock.title')}</h2>
+          <p>{t('sections.clock.description')}</p>
           <div className="demo-display">{renderTimeDisplay()}</div>
         </div>
 
         <div className="demo-section">
-          <h2>數字計數器 - Number Counter</h2>
-          <p>自動遞增的計數器，展示數字滾動效果</p>
+          <h2>{t('sections.counter.title')}</h2>
+          <p>{t('sections.counter.description')}</p>
           <div className="demo-display">
             <SplitFlap value={numberValue} chars={Presets.NUM} length={3} size="medium" theme="light" timing={25} />
           </div>
         </div>
 
         <div className="demo-section">
-          <h2>文字輪播 - Text Carousel</h2>
-          <p>輪播不同的城市名稱，展示字母變化效果</p>
+          <h2>{t('sections.carousel.title')}</h2>
+          <p>{t('sections.carousel.description')}</p>
           <div className="demo-display">
             <SplitFlap value={textValue} chars={Presets.ALPHANUM} length={6} size="medium" theme="dark" timing={20} />
           </div>
         </div>
 
         <div className="demo-section">
-          <h2>機場代碼 - Airport Codes</h2>
-          <p>模擬機場顯示牌的三字母代碼變化</p>
+          <h2>{t('sections.airport.title')}</h2>
+          <p>{t('sections.airport.description')}</p>
           <div className="demo-display">
             <SplitFlap value={airportCode} chars={Presets.ALPHANUM} length={3} size="large" theme="light" timing={30} />
           </div>
         </div>
 
         <div className="demo-section">
-          <h2>溫度顯示 - Temperature Display</h2>
-          <p>模擬溫度計的數值變化，帶有度數符號</p>
+          <h2>{t('sections.temperature.title')}</h2>
+          <p>{t('sections.temperature.description')}</p>
           <div className="demo-display" style={{ gap: '5px' }}>
             <SplitFlap value={temperature} chars={Presets.NUM} length={2} size="large" theme="dark" timing={35} />
             <span style={{ fontSize: '54px', color: '#333', fontWeight: 'bold' }}>°C</span>
@@ -154,8 +157,8 @@ function App() {
         </div>
 
         <div className="demo-section">
-          <h2>🚃 日本車站站名輪播 - Japanese Train Stations</h2>
-          <p>模擬日本JR山手線車站的站名顯示牌，自動輪播東京都內主要車站</p>
+          <h2>{t('sections.stations.title')}</h2>
+          <p>{t('sections.stations.description')}</p>
           <div
             className="demo-display"
             style={{
@@ -200,14 +203,14 @@ function App() {
         </div>
 
         <div className="demo-section">
-          <h2>互動輸入 - Interactive Input</h2>
-          <p>自由輸入文字，即時顯示翻頁效果</p>
+          <h2>{t('sections.input.title')}</h2>
+          <p>{t('sections.input.description')}</p>
           <div className="control-panel">
             <input
               type="text"
               value={customInput}
               onChange={(e) => setCustomInput(e.target.value.slice(0, 8))}
-              placeholder="輸入文字..."
+              placeholder={t('sections.input.placeholder')}
               maxLength={8}
             />
           </div>
@@ -225,29 +228,29 @@ function App() {
         </div>
 
         <div className="demo-section">
-          <h2>主題展示 - Theme Showcase</h2>
-          <p>不同大小和主題的顯示效果</p>
+          <h2>{t('sections.themes.title')}</h2>
+          <p>{t('sections.themes.description')}</p>
           <div className="theme-grid">
             <div className="theme-item">
-              <h3>🔸 小型深色 - Small Dark</h3>
+              <h3>{t('sections.themes.small')}</h3>
               <div className="demo-display">
                 <SplitFlap value="SM" chars={Presets.ALPHANUM} length={2} size="small" theme="dark" />
               </div>
             </div>
             <div className="theme-item">
-              <h3>⚪ 中型淺色 - Medium Light</h3>
+              <h3>{t('sections.themes.medium')}</h3>
               <div className="demo-display">
                 <SplitFlap value="MD" chars={Presets.ALPHANUM} length={2} size="medium" theme="light" />
               </div>
             </div>
             <div className="theme-item">
-              <h3>🔷 大型深色 - Large Dark</h3>
+              <h3>{t('sections.themes.large')}</h3>
               <div className="demo-display">
                 <SplitFlap value="LG" chars={Presets.ALPHANUM} length={2} size="large" theme="dark" />
               </div>
             </div>
             <div className="theme-item">
-              <h3>⭐ 特大淺色 - XLarge Light</h3>
+              <h3>{t('sections.themes.xlarge')}</h3>
               <div className="demo-display">
                 <SplitFlap value="XL" chars={Presets.ALPHANUM} length={2} size="xlarge" theme="light" />
               </div>

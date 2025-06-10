@@ -6,7 +6,6 @@
   "main": "dist/index.js",
   "module": "dist/index.es.js",
   "types": "dist/index.d.ts",
-  "style": "dist/index.css",
   "files": [
     "dist"
   ],
@@ -30,5 +29,5 @@
     "react": ">=16.8.0",
     "react-dom": ">=16.8.0"
   },
-  "yalcSig": "69c9b5b3abd848f3f70b55031e5e8dfc"
+  "yalcSig": "c8e147e12ec30c2667402afdbf76dd77"
 }

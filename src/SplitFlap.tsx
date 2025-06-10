@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useCallback } from 'react'
 import { Presets } from './presets'
-import './SplitFlap.css'
+import styles from './SplitFlap.css'
 
 export interface SplitFlapProps {
   /**
@@ -67,14 +67,19 @@ interface FlapProps {
 }
 
 const Flap: React.FC<FlapProps> = ({ bottom, animated, final, hinge, children }) => {
-  const classes = ['split-flap-part', bottom ? 'bottom' : 'top', animated ? 'animated' : '', final ? 'final' : '']
+  const classes = [
+    styles['split-flap-part'],
+    bottom ? styles.bottom : styles.top,
+    animated ? styles.animated : '',
+    final ? styles.final : '',
+  ]
     .filter(Boolean)
     .join(' ')
 
   return (
     <div className={classes}>
-      <span className="split-flap-char">{children}</span>
-      {hinge && <div className="split-flap-hinge" data-kind="hinge" />}
+      <span className={styles['split-flap-char']}>{children}</span>
+      {hinge && <div className={styles['split-flap-hinge']} data-kind="hinge" />}
     </div>
   )
 }
@@ -93,7 +98,7 @@ const FlapDigit: React.FC<FlapDigitProps> = ({ value, prevValue, final, mode, hi
   const digitStyle = digitWidth ? { width: `${digitWidth}px` } : {}
 
   return (
-    <div className="split-flap-digit" data-kind="digit" data-mode={mode} style={digitStyle}>
+    <div className={styles['split-flap-digit']} data-kind="digit" data-mode={mode} style={digitStyle}>
       {/* Static top half showing current value */}
       <Flap hinge={hinge}>{value}</Flap>
 
@@ -359,11 +364,11 @@ const SplitFlap: React.FC<SplitFlapProps> = ({
   }, [displayValue, chars, mode, length, padChar, timing, hinge, digitWidth, value])
 
   const displayClasses = [
-    'split-flap-display',
-    theme !== 'default' ? theme : '',
-    size, // Always include the size class
-    mode === 'custom' ? 'custom-mode' : '',
-    length === 1 ? 'words-mode' : '',
+    styles['split-flap-display'],
+    theme !== 'default' ? styles[theme] : '',
+    styles[size], // Always include the size class
+    mode === 'custom' ? styles['custom-mode'] : '',
+    length === 1 ? styles['words-mode'] : '',
     className,
   ]
     .filter(Boolean)
