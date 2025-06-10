@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import { LongFlap } from '../../../src/SplitFlap'
+import { LongFlap } from 'react-split-flap'
 
 const LongFlapDemo = () => {
   const [currentId, setCurrentId] = useState<string>('weather-sunny')
@@ -90,37 +90,6 @@ const LongFlapDemo = () => {
             </button>
           ))}
         </div>
-      </div>
-
-      <div className="code-example">
-        <h3>Usage Example:</h3>
-        <pre>
-          <code>
-            {`import { LongFlap } from 'react-split-flap-effect'
-
-const flaps = [
-  {
-    id: 'weather-sunny',
-    component: (
-      <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-        <span style={{ fontSize: '24px' }}>☀️</span>
-        <span>Sunny</span>
-      </div>
-    ),
-  },
-  // ... more flaps
-]
-
-<LongFlap
-  flaps={flaps}
-  displayId="weather-sunny"
-  digitWidth={150}
-  timing={80}
-  size="large"
-  theme="dark"
-/>`}
-          </code>
-        </pre>
       </div>
     </section>
   )

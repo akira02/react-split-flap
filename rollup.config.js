@@ -23,7 +23,7 @@ export default {
     resolve(),
     commonjs(),
     postcss({
-      modules: true,
+      modules: false,
       minimize: true,
       inject: true,
       extract: false,

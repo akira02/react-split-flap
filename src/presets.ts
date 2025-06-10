@@ -1,8 +1,5 @@
-import React from 'react'
-
-// Preset character sets for common use cases
 export const Presets = {
-  NUM: [' ', '0', '1', '2', '3', '4', '5', '6', '7', '8', '9'],
+  NUM: ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9'],
   ALPHANUM: [
     ' ',
     'A',

@@ -1,287 +1,7 @@
 import React, { useState, useEffect, useCallback } from 'react'
+import { SplitFlapProps } from './types'
+import { FlapStack } from './components'
 import { Presets } from './presets'
-import './SplitFlap.css'
-
-export interface SplitFlapProps {
-  /**
-   * The value to display
-   */
-  value: string
-  /**
-   * Characters/elements available for display - can include ReactNode components
-   */
-  chars?: (string | React.ReactNode)[]
-  /**
-   * Number of digits to display
-   */
-  length: number
-  /**
-   * Character used for padding
-   */
-  padChar?: string
-  /**
-   * Padding mode: 'auto', 'start', 'end'
-   */
-  padMode?: 'auto' | 'start' | 'end'
-  /**
-   * Custom width for each digit (in pixels)
-   */
-  digitWidth?: number
-  /**
-   * Animation timing in milliseconds
-   */
-  timing?: number
-  /**
-   * Show hinge line
-   */
-  hinge?: boolean
-  /**
-   * Theme variant
-   */
-  theme?: 'default' | 'light' | 'dark'
-  /**
-   * Size variant
-   */
-  size?: 'small' | 'medium' | 'large' | 'xlarge'
-  /**
-   * CSS class name
-   */
-  className?: string
-  /**
-   * CSS styles
-   */
-  style?: React.CSSProperties
-  /**
-   * Custom render function
-   */
-  render?: (children: React.ReactNode) => React.ReactNode
-}
-
-export interface LongFlapProps {
-  /**
-   * Array of flap items with id and component
-   */
-  flaps: Array<{
-    id: string | number
-    component: React.ReactNode
-  }>
-  /**
-   * Current display ID to show
-   */
-  displayId: string | number
-  /**
-   * Custom width for the flap (in pixels)
-   */
-  digitWidth?: number
-  /**
-   * Animation timing in milliseconds
-   */
-  timing?: number
-  /**
-   * Show hinge line
-   */
-  hinge?: boolean
-  /**
-   * Theme variant
-   */
-  theme?: 'default' | 'light' | 'dark'
-  /**
-   * Size variant
-   */
-  size?: 'small' | 'medium' | 'large' | 'xlarge'
-  /**
-   * CSS class name
-   */
-  className?: string
-  /**
-   * CSS styles
-   */
-  style?: React.CSSProperties
-  /**
-   * Custom render function
-   */
-  render?: (children: React.ReactNode) => React.ReactNode
-}
-
-// Individual flap component
-interface FlapProps {
-  children: React.ReactNode
-  bottom?: boolean
-  animated?: boolean
-  final?: boolean
-  hinge?: boolean
-}
-
-const Flap: React.FC<FlapProps> = ({ bottom, animated, final, hinge, children }) => {
-  const classes = ['split-flap-part', bottom ? 'bottom' : 'top', animated ? 'animated' : '', final ? 'final' : '']
-    .filter(Boolean)
-    .join(' ')
-
-  return (
-    <div className={classes}>
-      <span className="split-flap-char">{children}</span>
-      {hinge && <div className="split-flap-hinge" data-kind="hinge" />}
-    </div>
-  )
-}
-
-// Single digit component with flip animation
-interface FlapDigitProps {
-  value: React.ReactNode
-  prevValue: React.ReactNode
-  final: boolean
-  mode: 'num' | 'alpha' | 'custom' | 'words'
-  hinge: boolean
-  digitWidth?: number
-}
-
-const FlapDigit: React.FC<FlapDigitProps> = ({ value, prevValue, final, mode, hinge, digitWidth }) => {
-  const digitStyle = digitWidth ? { width: `${digitWidth}px` } : {}
-
-  return (
-    <div className="split-flap-digit" data-kind="digit" data-mode={mode} style={digitStyle}>
-      {/* Static top half showing current value */}
-      <Flap hinge={hinge}>{value}</Flap>
-
-      {/* Static bottom half showing previous value */}
-      <Flap bottom hinge={hinge}>
-        {prevValue}
-      </Flap>
-
-      {/* Animated top half flipping from previous to current */}
-      <Flap key={`top-${String(prevValue)}`} animated final={final} hinge={hinge}>
-        {prevValue}
-      </Flap>
-
-      {/* Animated bottom half appearing after top half flips */}
-      {final && (
-        <Flap key={`bottom-${String(value)}`} bottom animated final hinge={hinge}>
-          {value}
-        </Flap>
-      )}
-    </div>
-  )
-}
-
-// Stack component controlling the animation sequence
-interface FlapStackProps {
-  stack: (string | React.ReactNode)[]
-  value: string | React.ReactNode
-  timing: number
-  mode: 'num' | 'alpha' | 'custom' | 'words'
-  hinge: boolean
-  digitWidth?: number
-}
-
-const FlapStack: React.FC<FlapStackProps> = ({ stack, value, timing, mode, hinge, digitWidth }) => {
-  const [cursor, setCursor] = useState({
-    current: -1,
-    previous: -1,
-    target: 0,
-  })
-
-  // Reset cursor when stack changes
-  useEffect(() => {
-    setCursor({
-      current: -1,
-      previous: -1,
-      target: 0,
-    })
-  }, [stack])
-
-  // Animation sequence when value changes
-  useEffect(() => {
-    // Create extended stack if value is not in original stack
-    const extendedStack = (() => {
-      const index = stack.findIndex((item) => {
-        // Handle exact match for strings
-        if (typeof item === 'string' && typeof value === 'string') {
-          return item === value
-        }
-        // Handle ReactNode comparison by converting to strings
-        return String(item) === String(value)
-      })
-
-      // If value is found in stack, use original stack
-      if (index !== -1) {
-        return { stack, target: index }
-      }
-
-      // If value not found, add it to the end and make it the target
-      const newStack = [...stack, value]
-      return { stack: newStack, target: newStack.length - 1 }
-    })()
-
-    const { stack: currentStack, target } = extendedStack
-
-    let { current, previous } = cursor
-
-    const increment = () => {
-      previous = current
-      current = current >= currentStack.length - 1 ? 0 : current + 1
-
-      setCursor({
-        current,
-        previous,
-        target,
-      })
-    }
-
-    // Start the animation
-    increment()
-
-    // Continue animation if not at target
-    if (current !== target) {
-      const timer = setInterval(() => {
-        setCursor((prevCursor) => {
-          const newPrevious = prevCursor.current
-          const newCurrent = prevCursor.current >= currentStack.length - 1 ? 0 : prevCursor.current + 1
-
-          if (newCurrent === target) {
-            clearInterval(timer)
-          }
-
-          return {
-            current: newCurrent,
-            previous: newPrevious,
-            target,
-          }
-        })
-      }, timing)
-
-      return () => clearInterval(timer)
-    }
-  }, [stack, value, timing])
-
-  const { current, previous, target } = cursor
-
-  // Use the extended stack for rendering
-  const { stack: renderStack } = (() => {
-    const index = stack.findIndex((item) => {
-      if (typeof item === 'string' && typeof value === 'string') {
-        return item === value
-      }
-      return String(item) === String(value)
-    })
-
-    if (index !== -1) {
-      return { stack }
-    }
-
-    return { stack: [...stack, value] }
-  })()
-
-  return (
-    <FlapDigit
-      value={renderStack[current] || ''}
-      prevValue={renderStack[previous] || ''}
-      final={current === target}
-      mode={mode}
-      hinge={hinge}
-      digitWidth={digitWidth}
-    />
-  )
-}
 
 // Main display component
 const SplitFlap: React.FC<SplitFlapProps> = ({
@@ -305,14 +25,9 @@ const SplitFlap: React.FC<SplitFlapProps> = ({
   // Determine mode based on chars content
   useEffect(() => {
     // Check if chars contains only numbers
-    const isNumeric = chars.every((char) => typeof char === 'string' && /^[\s0-9]$/.test(char))
+    const isNumeric = chars.every((char) => /^[\s0-9]$/.test(char))
 
-    // Check if chars contains React components
-    const hasComponents = chars.some((char) => typeof char !== 'string')
-
-    if (hasComponents) {
-      setMode('custom')
-    } else if (isNumeric) {
+    if (isNumeric) {
       setMode('num')
     } else {
       setMode('alpha')
@@ -336,22 +51,15 @@ const SplitFlap: React.FC<SplitFlapProps> = ({
     }
 
     // Convert to uppercase for string chars
-    if (mode !== 'custom') {
-      processedValue = processedValue.toUpperCase()
-    }
+    processedValue = processedValue.toUpperCase()
 
     setDisplayValue(processedValue)
   }, [value, length, padChar, padMode, mode])
 
   // Helper function to find matching char in stack
-  const findCharInStack = (char: string): string | React.ReactNode => {
+  const findCharInStack = (char: string): string => {
     // First try exact match
-    const exactMatch = chars.find((item) => {
-      if (typeof item === 'string') {
-        return item === char
-      }
-      return String(item) === char
-    })
+    const exactMatch = chars.find((item) => item === char)
 
     if (exactMatch !== undefined) {
       return exactMatch
@@ -367,7 +75,7 @@ const SplitFlap: React.FC<SplitFlapProps> = ({
     // When length=1, display the entire value as a single flap
     if (length === 1) {
       // Convert to uppercase for string chars
-      const singleValue = mode !== 'custom' ? value.toUpperCase() : value
+      const singleValue = value.toUpperCase()
       const stackValue = findCharInStack(singleValue)
 
       digits.push(
@@ -408,7 +116,6 @@ const SplitFlap: React.FC<SplitFlapProps> = ({
     'split-flap-display',
     theme !== 'default' ? theme : '',
     size, // Always include the size class
-    mode === 'custom' ? 'custom-mode' : '',
     length === 1 ? 'words-mode' : '',
     className,
   ]
@@ -424,52 +131,4 @@ const SplitFlap: React.FC<SplitFlapProps> = ({
   return render ? render(content) : content
 }
 
-// LongFlap component for single flap with ReactNode support
-const LongFlap: React.FC<LongFlapProps> = ({
-  flaps,
-  displayId,
-  digitWidth,
-  timing = 60,
-  hinge = true,
-  theme = 'default',
-  size = 'medium',
-  className = '',
-  style,
-  render,
-}) => {
-  // Create stack from flap components
-  const flapStack = flaps.map((flap) => flap.component)
-
-  // Find the current display value
-  const currentFlap = flaps.find((flap) => flap.id === displayId)
-  const currentValue = currentFlap ? currentFlap.component : flaps[0]?.component || ''
-
-  const displayClasses = [
-    'split-flap-display',
-    theme !== 'default' ? theme : '',
-    size,
-    'custom-mode',
-    'words-mode',
-    className,
-  ]
-    .filter(Boolean)
-    .join(' ')
-
-  const content = (
-    <div className={displayClasses} style={style} aria-hidden="true" aria-label={String(displayId)}>
-      <FlapStack
-        stack={flapStack}
-        value={currentValue}
-        mode="words"
-        timing={timing}
-        hinge={hinge}
-        digitWidth={digitWidth}
-      />
-    </div>
-  )
-
-  return render ? render(content) : content
-}
-
 export default SplitFlap
-export { LongFlap }
