@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 import { LongFlap } from 'react-split-flap'
 
 const LongFlapDemo = () => {
@@ -43,19 +43,6 @@ const LongFlapDemo = () => {
       ),
     },
   ]
-
-  // Auto cycle through weather states
-  useEffect(() => {
-    const weatherIds = ['weather-sunny', 'weather-cloudy', 'weather-rainy', 'weather-snowy']
-    let currentIndex = 0
-
-    const interval = setInterval(() => {
-      currentIndex = (currentIndex + 1) % weatherIds.length
-      setCurrentId(weatherIds[currentIndex])
-    }, 3000)
-
-    return () => clearInterval(interval)
-  }, [])
 
   return (
     <section className="demo-section">

@@ -109,7 +109,6 @@
 .split-flap-part.bottom {
   clip-path: polygon(0 100%, 100% 100%, 100% 50%, 0 50%);
   align-items: flex-end;
-  padding-top: 0.05em;
 }
 
 .split-flap-part.bottom.animated.final {
