@@ -1,0 +1,269 @@
+/* Split-flap display keyframe animations */
+@keyframes flapDownTop {
+  from {
+    transform: rotateX(0deg);
+  }
+  50%,
+  to {
+    transform: rotateX(90deg);
+  }
+}
+
+@keyframes flapDownBottom {
+  from,
+  50% {
+    transform: rotateX(90deg);
+  }
+  90% {
+    transform: rotateX(20deg);
+  }
+  80%,
+  to {
+    transform: rotateX(0deg);
+  }
+}
+
+/* Main display container */
+.split-flap-display {
+  display: flex;
+  flex-direction: row;
+  gap: 2px;
+  align-items: center;
+  justify-content: center;
+  perspective: 1000px;
+}
+
+.split-flap-display.words-mode {
+  gap: 0;
+}
+
+/* Individual digit container */
+.split-flap-digit {
+  position: relative;
+  display: inline-block;
+  font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
+  font-weight: bold;
+  line-height: 1em;
+  text-align: center;
+  color: #ffffff;
+  background-color: #000000;
+  border-radius: 4px;
+  width: 1.1ch;
+  height: 1em;
+  box-sizing: content-box;
+  transform-style: preserve-3d;
+  overflow: hidden;
+}
+
+.split-flap-digit[data-mode='alpha'] {
+  width: 1.7ch;
+}
+
+.split-flap-digit[data-mode='words'] {
+  width: 100%;
+  min-width: 2ch;
+  padding: 0 0.2ch;
+}
+
+/* Individual flap parts */
+.split-flap-part {
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  animation-fill-mode: forwards;
+  transform-origin: center;
+  background-color: inherit;
+  background: linear-gradient(145deg, #1a1a1a, #000000);
+  border: 1px solid #333;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+  z-index: 1;
+  border-radius: inherit;
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  backface-visibility: hidden;
+}
+
+.split-flap-part.animated {
+  animation-duration: 300ms;
+  z-index: 2;
+}
+
+.split-flap-part.top {
+  clip-path: polygon(0 50%, 100% 50%, 100% 0, 0 0);
+  align-items: flex-start;
+  padding-bottom: 0.05em;
+}
+
+.split-flap-part.top.animated {
+  transform: rotateX(50deg);
+  opacity: 0.4;
+}
+
+.split-flap-part.top.animated.final {
+  opacity: 1;
+  animation-name: flapDownTop;
+  animation-timing-function: ease-in;
+}
+
+.split-flap-part.bottom {
+  clip-path: polygon(0 100%, 100% 100%, 100% 50%, 0 50%);
+  align-items: flex-end;
+  padding-top: 0.05em;
+}
+
+.split-flap-part.bottom.animated.final {
+  animation-name: flapDownBottom;
+  animation-timing-function: ease-out;
+}
+
+/* Character display */
+.split-flap-char {
+  display: block;
+  line-height: 1;
+  font-size: inherit;
+}
+
+/* Hinge line */
+.split-flap-hinge {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: #000;
+  transform: translateY(-50%);
+  z-index: 3;
+  box-shadow: 0 0 2px rgba(0, 0, 0, 0.5);
+  box-sizing: border-box;
+}
+
+/* Theme variations */
+.split-flap-display.light .split-flap-digit {
+  color: #333333;
+  background: #f0f0f0;
+}
+
+.split-flap-display.light .split-flap-part {
+  background: linear-gradient(145deg, #f8f8f8, #e8e8e8);
+  border: 1px solid #ccc;
+  box-shadow: inset 2px 2px 4px rgba(255, 255, 255, 0.8), inset -2px -2px 4px rgba(0, 0, 0, 0.1),
+    0 1px 3px rgba(0, 0, 0, 0.2);
+}
+
+.split-flap-display.light .split-flap-hinge {
+  background: linear-gradient(90deg, #bbb 0%, #999 50%, #bbb 100%);
+}
+
+.split-flap-display.dark .split-flap-digit {
+  color: #ffffff;
+  background: #1a1a1a;
+}
+
+.split-flap-display.dark .split-flap-part {
+  background: linear-gradient(145deg, #2a2a2a, #0a0a0a);
+  border: 1px solid #444;
+  box-shadow: inset 2px 2px 4px rgba(255, 255, 255, 0.1), inset -2px -2px 4px rgba(0, 0, 0, 0.3),
+    0 1px 3px rgba(0, 0, 0, 0.5);
+}
+
+.split-flap-display.dark .split-flap-hinge {
+  background: linear-gradient(90deg, #666 0%, #444 50%, #666 100%);
+}
+
+/* Size variations */
+.split-flap-display.small {
+  font-size: 20px;
+}
+
+.split-flap-display.medium {
+  font-size: 36px;
+}
+
+.split-flap-display.large {
+  font-size: 54px;
+}
+
+.split-flap-display.xlarge {
+  font-size: 84px;
+}
+
+/* Enhanced visual effects */
+.split-flap-digit::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(
+    135deg,
+    rgba(255, 255, 255, 0.1) 0%,
+    rgba(255, 255, 255, 0.05) 25%,
+    rgba(255, 255, 255, 0) 50%,
+    rgba(0, 0, 0, 0.05) 75%,
+    rgba(0, 0, 0, 0.1) 100%
+  );
+  pointer-events: none;
+  border-radius: inherit;
+  z-index: 4;
+}
+
+/* Accessibility and reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  .split-flap-part.animated {
+    animation-duration: 50ms;
+  }
+
+  .split-flap-part.top.animated {
+    transform: none;
+    opacity: 1;
+  }
+}
+
+@media (prefers-contrast: high) {
+  .split-flap-digit {
+    border: 2px solid currentColor;
+  }
+
+  .split-flap-display.light .split-flap-digit {
+    color: #000000;
+    background: #ffffff;
+  }
+
+  .split-flap-display.dark .split-flap-digit {
+    color: #ffffff;
+    background: #000000;
+  }
+}
+
+/* Words mode specific styles */
+.split-flap-display.words-mode .split-flap-digit {
+  border-radius: 0;
+  margin: 0;
+}
+
+.split-flap-display.words-mode .split-flap-digit:first-child {
+  border-top-left-radius: 4px;
+  border-bottom-left-radius: 4px;
+}
+
+.split-flap-display.words-mode .split-flap-digit:last-child {
+  border-top-right-radius: 4px;
+  border-bottom-right-radius: 4px;
+}
+
+.split-flap-display.words-mode .split-flap-digit:only-child {
+  border-radius: 4px;
+}
+
+/* Focus states for accessibility */
+.split-flap-display:focus-within .split-flap-digit {
+  box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.5);
+}
+
+/* Smooth transitions for non-animated states */
+.split-flap-part:not(.animated) {
+  transition: background-color 0.2s ease, border-color 0.2s ease;
+}

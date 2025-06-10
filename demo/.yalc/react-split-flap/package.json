@@ -1,6 +1,6 @@
 {
   "name": "react-split-flap",
-  "version": "1.0.2",
+  "version": "0.0.1",
   "description": "Split-flap display component for React",
   "type": "module",
   "main": "dist/index.js",
@@ -30,5 +30,5 @@
     "react": ">=16.8.0",
     "react-dom": ">=16.8.0"
   },
-  "yalcSig": "4130c9578952c1eb2987f8c0bdd2a299"
+  "yalcSig": "69c9b5b3abd848f3f70b55031e5e8dfc"
 }

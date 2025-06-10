@@ -1,42 +1,8 @@
 import { useState, useEffect } from 'react'
 import { SplitFlap, Presets } from 'react-split-flap'
+import { JapaneseStations } from './presets'
 import 'react-split-flap/dist/index.css'
 import './App.css'
-
-const stations = [
-  '新宿',
-  '渋谷',
-  '池袋',
-  '東京',
-  '品川',
-  '上野',
-  '秋葉原',
-  '有楽町',
-  '銀座',
-  '新橋',
-  '浜松町',
-  '大崎',
-  '五反田',
-  '目黒',
-  '恵比寿',
-  '原宿',
-  '代々木',
-  '新大久保',
-  '高田馬場',
-  '目白',
-  '板橋',
-  '王子',
-  '赤羽',
-  '川口',
-  '横浜',
-  '川崎',
-  '蒲田',
-  '大森',
-  '大井町',
-  '西日暮里',
-  '日暮里',
-  '鶯谷',
-]
 
 function App() {
   const [timeValue, setTimeValue] = useState('')
@@ -119,8 +85,8 @@ function App() {
     let index = 0
 
     const interval = setInterval(() => {
-      index = (index + 1) % stations.length
-      setStationName(stations[index])
+      index = Math.floor(Math.random() * JapaneseStations.length)
+      setStationName(JapaneseStations[index])
     }, 3500)
 
     return () => clearInterval(interval)
@@ -133,11 +99,11 @@ function App() {
 
     return (
       <div style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
-        <SplitFlap value={hours} chars={Presets.NUM} length={2} className="large dark" />
+        <SplitFlap value={hours} chars={Presets.NUM} length={2} size="large" theme="dark" />
         <span style={{ fontSize: '48px', color: '#333', fontWeight: 'bold' }}>:</span>
-        <SplitFlap value={minutes} chars={Presets.NUM} length={2} className="large dark" />
+        <SplitFlap value={minutes} chars={Presets.NUM} length={2} size="large" theme="dark" />
         <span style={{ fontSize: '48px', color: '#333', fontWeight: 'bold' }}>:</span>
-        <SplitFlap value={seconds} chars={Presets.NUM} length={2} className="large dark" />
+        <SplitFlap value={seconds} chars={Presets.NUM} length={2} size="large" theme="dark" />
       </div>
     )
   }
@@ -158,7 +124,7 @@ function App() {
           <h2>數字計數器 - Number Counter</h2>
           <p>自動遞增的計數器，展示數字滾動效果</p>
           <div className="demo-display">
-            <SplitFlap value={numberValue} chars={Presets.NUM} length={3} className="medium light" timing={25} />
+            <SplitFlap value={numberValue} chars={Presets.NUM} length={3} size="medium" theme="light" timing={25} />
           </div>
         </div>
 
@@ -166,7 +132,7 @@ function App() {
           <h2>文字輪播 - Text Carousel</h2>
           <p>輪播不同的城市名稱，展示字母變化效果</p>
           <div className="demo-display">
-            <SplitFlap value={textValue} chars={Presets.ALPHANUM} length={6} className="medium dark" timing={20} />
+            <SplitFlap value={textValue} chars={Presets.ALPHANUM} length={6} size="medium" theme="dark" timing={20} />
           </div>
         </div>
 
@@ -174,7 +140,7 @@ function App() {
           <h2>機場代碼 - Airport Codes</h2>
           <p>模擬機場顯示牌的三字母代碼變化</p>
           <div className="demo-display">
-            <SplitFlap value={airportCode} chars={Presets.ALPHANUM} length={3} className="large light" timing={30} />
+            <SplitFlap value={airportCode} chars={Presets.ALPHANUM} length={3} size="large" theme="light" timing={30} />
           </div>
         </div>
 
@@ -182,7 +148,7 @@ function App() {
           <h2>溫度顯示 - Temperature Display</h2>
           <p>模擬溫度計的數值變化，帶有度數符號</p>
           <div className="demo-display" style={{ gap: '5px' }}>
-            <SplitFlap value={temperature} chars={Presets.NUM} length={2} className="large dark" timing={35} />
+            <SplitFlap value={temperature} chars={Presets.NUM} length={2} size="large" theme="dark" timing={35} />
             <span style={{ fontSize: '54px', color: '#333', fontWeight: 'bold' }}>°C</span>
           </div>
         </div>
@@ -213,45 +179,22 @@ function App() {
             >
               <div
                 style={{
-                  fontSize: '24px',
-                  color: 'white',
-                  fontWeight: 'bold',
-                  textShadow: '2px 2px 4px rgba(0,0,0,0.5)',
-                }}
-              >
-                次は
-              </div>
-              <div
-                style={{
                   background: 'rgba(0,0,0,0.8)',
                   padding: '10px',
                   borderRadius: '6px',
                   border: '2px solid #00ff00',
                 }}
               >
-                <SplitFlap value={stationName} words={stations} length={3} className="large dark" timing={40} />
+                <SplitFlap
+                  value={stationName}
+                  chars={JapaneseStations}
+                  length={1}
+                  digitWidth={300}
+                  size="large"
+                  theme="dark"
+                  timing={40}
+                />
               </div>
-              <div
-                style={{
-                  fontSize: '24px',
-                  color: 'white',
-                  fontWeight: 'bold',
-                  textShadow: '2px 2px 4px rgba(0,0,0,0.5)',
-                }}
-              >
-                です
-              </div>
-            </div>
-            <div
-              style={{
-                textAlign: 'center',
-                marginTop: '15px',
-                color: '#b8daff',
-                fontSize: '14px',
-                textShadow: '1px 1px 2px rgba(0,0,0,0.7)',
-              }}
-            >
-              JR山手線・京浜東北線・中央線などの主要駅を順次表示
             </div>
           </div>
         </div>
@@ -271,9 +214,10 @@ function App() {
           <div className="demo-display">
             <SplitFlap
               value={customInput}
-              chars={Presets.ALPHANUM + '!@#$%^&*(),.?'}
+              chars={Presets.ALPHANUM}
               length={8}
-              className="large light"
+              size="large"
+              theme="light"
               padMode="end"
               timing={25}
             />
@@ -287,25 +231,25 @@ function App() {
             <div className="theme-item">
               <h3>🔸 小型深色 - Small Dark</h3>
               <div className="demo-display">
-                <SplitFlap value="SMALL" chars={Presets.ALPHANUM} length={5} className="small dark" />
+                <SplitFlap value="SM" chars={Presets.ALPHANUM} length={2} size="small" theme="dark" />
               </div>
             </div>
             <div className="theme-item">
               <h3>⚪ 中型淺色 - Medium Light</h3>
               <div className="demo-display">
-                <SplitFlap value="MEDIUM" chars={Presets.ALPHANUM} length={6} className="medium light" />
+                <SplitFlap value="MD" chars={Presets.ALPHANUM} length={2} size="medium" theme="light" />
               </div>
             </div>
             <div className="theme-item">
               <h3>🔷 大型深色 - Large Dark</h3>
               <div className="demo-display">
-                <SplitFlap value="LARGE" chars={Presets.ALPHANUM} length={5} className="large dark" />
+                <SplitFlap value="LG" chars={Presets.ALPHANUM} length={2} size="large" theme="dark" />
               </div>
             </div>
             <div className="theme-item">
               <h3>⭐ 特大淺色 - XLarge Light</h3>
               <div className="demo-display">
-                <SplitFlap value="XL" chars={Presets.ALPHANUM} length={2} className="xlarge light" />
+                <SplitFlap value="XL" chars={Presets.ALPHANUM} length={2} size="xlarge" theme="light" />
               </div>
             </div>
           </div>
@@ -315,7 +259,7 @@ function App() {
           <h2>無鉸鏈模式 - No Hinge Mode</h2>
           <p>關閉中間分隔線，呈現更簡潔的視覺效果</p>
           <div className="demo-display">
-            <SplitFlap value="NO HINGE" chars={Presets.ALPHANUM} length={8} className="medium dark" hinge={false} />
+            <SplitFlap value="NO HINGE" chars={Presets.ALPHANUM} length={8} size="large" theme="dark" hinge={false} />
           </div>
         </div>
 
@@ -323,13 +267,7 @@ function App() {
           <h2>特殊字符 - Special Characters</h2>
           <p>支援數字、字母和常用符號的混合顯示</p>
           <div className="demo-display">
-            <SplitFlap
-              value="HELLO!"
-              chars={Presets.ALPHANUM + '!@#$%^&*(),.?-_+=[]{}'}
-              length={6}
-              className="large light"
-              timing={30}
-            />
+            <SplitFlap value="HELLO!" chars={Presets.ALPHANUM} length={6} size="large" theme="light" timing={30} />
           </div>
         </div>
 
