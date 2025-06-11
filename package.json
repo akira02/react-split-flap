@@ -1,6 +1,6 @@
 {
   "name": "react-split-flap",
-  "version": "0.1.6",
+  "version": "0.1.7",
   "description": "Split-flap display component for React",
   "type": "module",
   "main": "dist/index.js",
@@ -23,8 +23,12 @@
     "animation",
     "component"
   ],
-  "author": "Chiaki",
+  "author": "Chiaki.C",
   "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/akira02/react-split-flap.git"
+  },
   "peerDependencies": {
     "react": ">=16.8.0",
     "react-dom": ">=16.8.0"

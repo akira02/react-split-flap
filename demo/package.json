@@ -16,7 +16,7 @@
     "react": "^19.1.0",
     "react-dom": "^19.1.0",
     "react-i18next": "^15.5.2",
-    "react-split-flap": "file:.yalc/react-split-flap"
+    "react-split-flap": "^0.1.7"
   },
   "devDependencies": {
     "@eslint/js": "^9.25.0",
