@@ -7,7 +7,7 @@
 
 A React component that simulates the classic split-flap display effect, inspired by train stations and airport displays.
 
-[Live Demo](https://akira02.github.io/react-split-flap)
+[Live Demo](https://akira02.github.io/react-split-flap)  
 [GitHub Repository](https://github.com/akira02/react-split-flap)
 
 ## Features
@@ -94,18 +94,6 @@ Perfect for displaying complex ReactNode components with ID-based switching, ide
   - ID-based switching between predefined states
   - Single flap displaying rich content
   - Custom rendering of complex elements
-
-## Preset Character Sets
-
-```tsx
-import { Presets } from 'react-split-flap'
-
-// Numeric character set (includes space)
-Presets.NUM = ' 0123456789'
-
-// Alphanumeric character set
-Presets.ALPHANUM = ' ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789'
-```
 
 ## Built-in Themes & Sizes
 
