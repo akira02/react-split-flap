@@ -132,11 +132,11 @@ const MINUTE_FLAPS = Array.from({ length: 10 }, (_, index) => ({
 
 const TrainDemo = () => {
   const [currentTrainType, setCurrentTrainType] = useState(0)
-  const [currentDestination, setCurrentDestination] = useState(0)
+  const [currentDestination, setCurrentDestination] = useState(1)
   const [currentSeq, setCurrentSeq] = useState(0)
   const [currentBikou, setCurrentBikou] = useState(0)
-  const [currentHour, setCurrentHour] = useState(0)
-  const [currentMinuteTens, setCurrentMinuteTens] = useState(0)
+  const [currentHour, setCurrentHour] = useState(5)
+  const [currentMinuteTens, setCurrentMinuteTens] = useState(4)
   const [currentMinuteUnits, setCurrentMinuteUnits] = useState(0)
 
   useEffect(() => {
