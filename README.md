@@ -1,7 +1,7 @@
 # React Split Flap
 
-![Jun-11-2025 16-06-39](https://github.com/user-attachments/assets/684e11b3-b006-454f-91ea-908ab17b1c21)  
-![Jun-11-2025 16-08-48](https://github.com/user-attachments/assets/0cd24149-76f3-4d91-8663-32b5646cd79e)
+![Jun-11-2025 16-06-39](https://files.catbox.moe/9hbue5.gif)  
+![Jun-11-2025 16-08-48](https://files.catbox.moe/1cw1ic.gif)
 
 [![NPM](https://img.shields.io/npm/v/react-split-flap.svg)](https://www.npmjs.com/package/react-split-flap)
 

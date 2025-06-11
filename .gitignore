@@ -6,6 +6,11 @@ yarn-error.log*
 pnpm-debug.log*
 lerna-debug.log*
 
+# Yalc local packages (temporary development)
+.yalc/
+yalc.lock
+yalc.sig
+
 # Build outputs
 dist/
 build/

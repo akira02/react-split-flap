@@ -1,25 +1,25 @@
 /* Split-flap display keyframe animations */
 @keyframes flapDownTop {
   from {
-    transform: rotateX(0deg);
+    transform: rotateX(0deg) translateZ(0);
   }
   50%,
   to {
-    transform: rotateX(90deg);
+    transform: rotateX(90deg) translateZ(0);
   }
 }
 
 @keyframes flapDownBottom {
   from,
   50% {
-    transform: rotateX(90deg);
+    transform: rotateX(90deg) translateZ(0);
   }
   90% {
-    transform: rotateX(20deg);
+    transform: rotateX(20deg) translateZ(0);
   }
   80%,
   to {
-    transform: rotateX(0deg);
+    transform: rotateX(0deg) translateZ(0);
   }
 }
 
