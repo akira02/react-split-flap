@@ -50,6 +50,14 @@ export interface SplitFlapProps {
    */
   style?: React.CSSProperties
   /**
+   * Custom background color or gradient for the flaps
+   */
+  background?: string
+  /**
+   * Custom font color for the flap text
+   */
+  fontColor?: string
+  /**
    * Custom render function
    */
   render?: (children: React.ReactNode) => React.ReactNode
@@ -99,6 +107,14 @@ export interface LongFlapProps {
    * CSS styles
    */
   style?: React.CSSProperties
+  /**
+   * Custom background color or gradient for the flaps
+   */
+  background?: string
+  /**
+   * Custom font color for the flap text
+   */
+  fontColor?: string
   /**
    * Custom render function
    */

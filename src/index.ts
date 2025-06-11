@@ -1,8 +1,9 @@
 // Import CSS styles so they are included in the bundle
-import './SplitFlap.css'
+import './main.css'
 
 export { default as SplitFlap } from './SplitFlap'
 export { default } from './SplitFlap'
+
 export { default as LongFlap } from './LongFlap'
 export { Presets } from './presets'
 

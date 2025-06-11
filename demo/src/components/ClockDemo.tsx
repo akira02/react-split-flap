@@ -41,7 +41,6 @@ const ClockDemo = () => {
   return (
     <div className="demo-section">
       <h2>{t('sections.clock.title')}</h2>
-      <p>{t('sections.clock.description')}</p>
       <div className="demo-display">{renderTimeDisplay()}</div>
     </div>
   )

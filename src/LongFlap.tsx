@@ -13,6 +13,8 @@ const LongFlap: React.FC<LongFlapProps> = ({
   size = 'medium',
   className = '',
   style,
+  background,
+  fontColor,
   render,
 }) => {
   // Memoize the stack to maintain stable references
@@ -33,7 +35,14 @@ const LongFlap: React.FC<LongFlapProps> = ({
     ...style,
     '--digit-width': digitWidth ? `${digitWidth}px` : 'auto',
     '--digit-height': digitHeight ? `${digitHeight}px` : 'auto',
-  } as React.CSSProperties & { '--digit-width': string; '--digit-height': string }
+    ...(background && { '--flap-background': background }),
+    ...(fontColor && { '--flap-font-color': fontColor }),
+  } as React.CSSProperties & {
+    '--digit-width': string
+    '--digit-height': string
+    '--flap-background'?: string
+    '--flap-font-color'?: string
+  }
 
   const content = (
     <div className={displayClasses} style={longFlapStyle} aria-hidden="true">

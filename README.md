@@ -1,10 +1,14 @@
 # React Split Flap
 
+![Jun-11-2025 16-06-39](https://github.com/user-attachments/assets/684e11b3-b006-454f-91ea-908ab17b1c21)  
+![Jun-11-2025 16-08-48](https://github.com/user-attachments/assets/0cd24149-76f3-4d91-8663-32b5646cd79e)
+
 [![NPM](https://img.shields.io/npm/v/react-split-flap.svg)](https://www.npmjs.com/package/react-split-flap)
 
 A React component that simulates the classic split-flap display effect, inspired by train stations and airport displays.
 
 [Live Demo](https://akira02.github.io/react-split-flap)
+[GitHub Repository](https://github.com/akira02/react-split-flap)
 
 ## Features
 
@@ -28,10 +32,9 @@ yarn add react-split-flap
 ```tsx
 import React from 'react'
 import { SplitFlap, Presets } from 'react-split-flap'
-import 'react-split-flap/dist/index.css'
 
 function App() {
-  return <SplitFlap value="HELLO" chars={Presets.ALPHANUM} length={5} className="medium dark" />
+  return <SplitFlap value="HELLO" chars={Presets.ALPHANUM} length={5} />
 }
 ```
 
@@ -43,21 +46,23 @@ Perfect for displaying strings with character-by-character flipping animation.
 
 #### Props
 
-| Property     | Type                                         | Default       | Description                          |
-| ------------ | -------------------------------------------- | ------------- | ------------------------------------ |
-| `value`      | `string`                                     | -             | Value to display                     |
-| `length`     | `number`                                     | -             | Number of digits to display          |
-| `chars`      | `string`                                     | `Presets.NUM` | Available character set              |
-| `padChar`    | `string`                                     | `' '`         | Padding character                    |
-| `padMode`    | `'auto' \| 'start' \| 'end'`                 | `'auto'`      | Padding mode                         |
-| `digitWidth` | `number`                                     | -             | Custom width for each digit (pixels) |
-| `timing`     | `number`                                     | `30`          | Animation interval (milliseconds)    |
-| `hinge`      | `boolean`                                    | `true`        | Whether to show hinge line           |
-| `theme`      | `'default' \| 'light' \| 'dark'`             | `'default'`   | Theme variant                        |
-| `size`       | `'small' \| 'medium' \| 'large' \| 'xlarge'` | `'medium'`    | Size variant                         |
-| `className`  | `string`                                     | `''`          | CSS class name                       |
-| `style`      | `React.CSSProperties`                        | -             | Inline styles                        |
-| `render`     | `(children: ReactNode) => ReactNode`         | -             | Custom render function               |
+| Property     | Type                                         | Default       | Description                                                                   |
+| ------------ | -------------------------------------------- | ------------- | ----------------------------------------------------------------------------- |
+| `value`      | `string`                                     | -             | Value to display                                                              |
+| `length`     | `number`                                     | -             | Number of digits to display. If set to 1, will display full value on one flap |
+| `chars`      | `string[]`                                   | `Presets.NUM` | Available character set                                                       |
+| `padChar`    | `string`                                     | `' '`         | Padding character                                                             |
+| `padMode`    | `'auto' \| 'start' \| 'end'`                 | `'auto'`      | 'auto' will align number right and string left                                |
+| `digitWidth` | `number`                                     | -             | Custom width for each digit (pixels)                                          |
+| `timing`     | `number`                                     | `30`          | Animation interval (milliseconds)                                             |
+| `hinge`      | `boolean`                                    | `true`        | Whether to show hinge line                                                    |
+| `theme`      | `'default' \| 'light' \| 'dark'`             | `'default'`   | Theme variant                                                                 |
+| `size`       | `'small' \| 'medium' \| 'large' \| 'xlarge'` | `'medium'`    | Size variant                                                                  |
+| `className`  | `string`                                     | `''`          | CSS class name                                                                |
+| `style`      | `React.CSSProperties`                        | -             | Inline styles                                                                 |
+| `background` | `string`                                     | -             | Custom background color or gradient for the flaps                             |
+| `fontColor`  | `string`                                     | -             | Custom font color for the flap text                                           |
+| `render`     | `(children: ReactNode) => ReactNode`         | -             | Custom render function                                                        |
 
 ### LongFlap - Complex Content Display
 
@@ -65,18 +70,21 @@ Perfect for displaying complex ReactNode components with ID-based switching, ide
 
 #### Props
 
-| Property     | Type                                                  | Default     | Description                               |
-| ------------ | ----------------------------------------------------- | ----------- | ----------------------------------------- |
-| `flaps`      | `Array<{id: string \| number, component: ReactNode}>` | -           | Array of flap items with ID and component |
-| `displayId`  | `string \| number`                                    | -           | Current display ID to show                |
-| `digitWidth` | `number`                                              | -           | Custom width for the flap (pixels)        |
-| `timing`     | `number`                                              | `60`        | Animation timing (milliseconds)           |
-| `hinge`      | `boolean`                                             | `true`      | Whether to show hinge line                |
-| `theme`      | `'default' \| 'light' \| 'dark'`                      | `'default'` | Theme variant                             |
-| `size`       | `'small' \| 'medium' \| 'large' \| 'xlarge'`          | `'medium'`  | Size variant                              |
-| `className`  | `string`                                              | `''`        | CSS class name                            |
-| `style`      | `React.CSSProperties`                                 | -           | Inline styles                             |
-| `render`     | `(children: ReactNode) => ReactNode`                  | -           | Custom render function                    |
+| Property      | Type                                                  | Default     | Description                                       |
+| ------------- | ----------------------------------------------------- | ----------- | ------------------------------------------------- |
+| `flaps`       | `Array<{id: string \| number, component: ReactNode}>` | -           | Array of flap items with ID and component         |
+| `displayId`   | `string \| number`                                    | -           | Current display ID to show                        |
+| `digitWidth`  | `number`                                              | -           | Custom width for the flap (pixels)                |
+| `digitHeight` | `number`                                              | -           | Custom height for the flap (pixels)               |
+| `timing`      | `number`                                              | `60`        | Animation timing (milliseconds)                   |
+| `hinge`       | `boolean`                                             | `true`      | Whether to show hinge line                        |
+| `theme`       | `'default' \| 'light' \| 'dark'`                      | `'default'` | Theme variant                                     |
+| `size`        | `'small' \| 'medium' \| 'large' \| 'xlarge'`          | `'medium'`  | Size variant                                      |
+| `className`   | `string`                                              | `''`        | CSS class name                                    |
+| `style`       | `React.CSSProperties`                                 | -           | Inline styles                                     |
+| `background`  | `string`                                              | -           | Custom background color or gradient for the flaps |
+| `fontColor`   | `string`                                              | -           | Custom font color for the flap text               |
+| `render`      | `(children: ReactNode) => ReactNode`                  | -           | Custom render function                            |
 
 #### When to use LongFlap vs SplitFlap
 
@@ -160,6 +168,27 @@ function TextCarousel() {
 }
 ```
 
+#### Custom Styling
+
+```tsx
+import React from 'react'
+import { SplitFlap, Presets } from 'react-split-flap'
+
+function CustomStyledFlap() {
+  return (
+    <SplitFlap
+      value="CUSTOM"
+      chars={Presets.ALPHANUM}
+      length={6}
+      size="large"
+      background="linear-gradient(45deg, #ff6b6b, #4ecdc4)"
+      fontColor="#ffffff"
+      timing={50}
+    />
+  )
+}
+```
+
 ### LongFlap Examples
 
 #### Weather Display
@@ -168,32 +197,66 @@ function TextCarousel() {
 import React, { useState } from 'react'
 import { LongFlap } from 'react-split-flap'
 
+/* Keep prop "flaps" constant. Will trigger <LongFlap /> re-render when changed. */
+const weatherFlaps = [
+  {
+    id: 'sunny',
+    component: (
+      <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+        <span>☀️</span>
+        <span>Sunny</span>
+      </div>
+    ),
+  },
+  {
+    id: 'rainy',
+    component: (
+      <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+        <span>🌧️</span>
+        <span>Rainy</span>
+      </div>
+    ),
+  },
+]
+
 function WeatherDisplay() {
   const [currentWeather, setCurrentWeather] = useState('sunny')
 
-  const weatherFlaps = [
-    {
-      id: 'sunny',
-      component: (
-        <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-          <span>☀️</span>
-          <span>Sunny</span>
-        </div>
-      ),
-    },
-    {
-      id: 'rainy',
-      component: (
-        <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-          <span>🌧️</span>
-          <span>Rainy</span>
-        </div>
-      ),
-    },
-  ]
+  return <LongFlap flaps={weatherFlaps} displayId={currentWeather} digitWidth={200} size="large" theme="dark" />
+}
+```
+
+#### Custom Styled LongFlap
+
+```tsx
+import React from 'react'
+import { LongFlap } from 'react-split-flap'
+
+const styledFlaps = [
+  {
+    id: 'status1',
+    component: <div style={{ fontSize: '24px', fontWeight: 'bold' }}>🚀 READY</div>,
+  },
+  {
+    id: 'status2',
+    component: <div style={{ fontSize: '24px', fontWeight: 'bold' }}>⚡ ACTIVE</div>,
+  },
+]
+
+function CustomStyledLongFlap() {
+  const [status, setStatus] = useState('status1')
 
   return (
-    <LongFlap flaps={weatherFlaps} displayId={currentWeather} digitWidth={200} timing={80} size="large" theme="dark" />
+    <LongFlap
+      flaps={styledFlaps}
+      displayId={status}
+      digitWidth={250}
+      digitHeight={80}
+      background="linear-gradient(135deg, #667eea 0%, #764ba2 100%)"
+      fontColor="#ffffff"
+      timing={100}
+      size="xlarge"
+    />
   )
 }
 ```
@@ -211,12 +274,13 @@ cd react-split-flap
 yarn install
 
 # Build the package
-yarn build
+yarn global add yalc
+yarn dev:publish #use yalc to public local
 
 # Start demo
 cd demo
 yarn install
-yarn dev
+yarn dev:hot #force vite use fresh package
 ```
 
 ### Build

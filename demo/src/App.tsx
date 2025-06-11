@@ -1,17 +1,14 @@
 import { useTranslation } from 'react-i18next'
 import LanguageSwitcher from './components/LanguageSwitcher'
 import ClockDemo from './components/ClockDemo'
-import CounterDemo from './components/CounterDemo'
 import CarouselDemo from './components/CarouselDemo'
-import AirportDemo from './components/AirportDemo'
-import TemperatureDemo from './components/TemperatureDemo'
-import StationsDemo from './components/StationsDemo'
 import InputDemo from './components/InputDemo'
 import ThemesDemo from './components/ThemesDemo'
 import TrainDemo from './components/TrainDemo'
 import NoHingeDemo from './components/NoHingeDemo'
 import SpecialCharactersDemo from './components/SpecialCharactersDemo'
 import LongFlapDemo from './components/LongFlapDemo'
+import FlightDemo from './components/FlightDemo'
 import './App.css'
 
 function App() {
@@ -26,11 +23,8 @@ function App() {
 
         <ClockDemo />
         <TrainDemo />
-        <CounterDemo />
+        <FlightDemo />
         <CarouselDemo />
-        <AirportDemo />
-        <TemperatureDemo />
-        <StationsDemo />
         <InputDemo />
         <ThemesDemo />
         <NoHingeDemo />
