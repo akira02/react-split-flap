@@ -1,11 +1,6 @@
 import { useState, useEffect } from 'react'
 import { LongFlap } from 'react-split-flap'
 
-interface Destination {
-  japanese: string
-  english: string
-}
-
 const SEQ: {
   word: string
   style: React.CSSProperties
@@ -21,19 +16,6 @@ const SEQ: {
 
 // Replace the KEIKYU_TRAIN_TYPES array with image-based train types
 const KEIKYU_TRAIN_TYPES = ['air_exp', 'air_ltd', 'air_rapid_ltd', 'com_ltd', 'exp', 'local', 'ltd', 'out', 'rapid_ltd']
-
-const KEIKYU_DESTINATIONS: Destination[] = [
-  { japanese: '羽田空港', english: 'Haneda Airport' },
-  { japanese: '品川', english: 'Shinagawa' },
-  { japanese: '横浜', english: 'Yokohama' },
-  { japanese: '新宿', english: 'Shinjuku' },
-  { japanese: '浅草', english: 'Asakusa' },
-  { japanese: '西馬込', english: 'Nishi-Magome' },
-  { japanese: '三崎口', english: 'Misakiguchi' },
-  { japanese: '金沢文庫', english: 'Kanazawa-Bunko' },
-  { japanese: '上大岡', english: 'Kamiooka' },
-  { japanese: '日本橋', english: 'Nihombashi' },
-]
 
 const SEQ_FLAPS = Array(50)
   .fill(null)
@@ -93,11 +75,54 @@ const BIKOU_FLAPS = Array.from({ length: 60 }, (_, index) => ({
 
 const DESTINATION_FLAPS = Array.from({ length: 60 }, (_, index) => ({
   id: index.toString(),
+  component:
+    index < 45 ? (
+      <img
+        src={`./images/kawasaki/dest/${index}.PNG`}
+        alt={`Destination ${index}`}
+        style={{ width: '200px', height: '50px' }}
+        onError={(e) => {
+          e.currentTarget.style.display = 'none'
+        }}
+      />
+    ) : (
+      <div />
+    ),
+}))
+
+// Generate hour flaps (0-24)
+const HOUR_FLAPS = Array.from({ length: 25 }, (_, index) => ({
+  id: index.toString(),
   component: (
     <img
-      src={`./images/kawasaki/dest/${index}.PNG`}
-      alt={`Destination ${index}`}
-      style={{ width: '200px', height: '50px' }}
+      src={`./images/kawasaki/hour/${index}.PNG`}
+      alt={`Hour ${index}`}
+      style={{
+        width: '100%',
+        height: '100%',
+        objectFit: 'contain',
+        display: 'block',
+      }}
+      onError={(e) => {
+        e.currentTarget.style.display = 'none'
+      }}
+    />
+  ),
+}))
+
+// Generate minute flaps (0-9 for both tens and units)
+const MINUTE_FLAPS = Array.from({ length: 10 }, (_, index) => ({
+  id: index.toString(),
+  component: (
+    <img
+      src={`./images/kawasaki/minute/${index}.PNG`}
+      alt={`Minute ${index}`}
+      style={{
+        width: '100%',
+        height: '100%',
+        objectFit: 'contain',
+        display: 'block',
+      }}
       onError={(e) => {
         e.currentTarget.style.display = 'none'
       }}
@@ -110,13 +135,19 @@ const TrainDemo = () => {
   const [currentDestination, setCurrentDestination] = useState(0)
   const [currentSeq, setCurrentSeq] = useState(0)
   const [currentBikou, setCurrentBikou] = useState(0)
+  const [currentHour, setCurrentHour] = useState(0)
+  const [currentMinuteTens, setCurrentMinuteTens] = useState(0)
+  const [currentMinuteUnits, setCurrentMinuteUnits] = useState(0)
 
   useEffect(() => {
     const trainTypeInterval = setInterval(() => {
       setCurrentTrainType(Math.floor(Math.random() * KEIKYU_TRAIN_TYPES.length))
-      setCurrentDestination(Math.floor(Math.random() * KEIKYU_DESTINATIONS.length))
+      setCurrentDestination(Math.floor(Math.random() * 45))
       setCurrentSeq(Math.floor(Math.random() * SEQ.length))
       setCurrentBikou(Math.floor(Math.random() * 60))
+      setCurrentHour(Math.floor(Math.random() * 24))
+      setCurrentMinuteTens(Math.floor(Math.random() * 6)) // 0-5 for tens digit (00-59)
+      setCurrentMinuteUnits(Math.floor(Math.random() * 10)) // 0-9 for units digit
     }, 4000)
 
     return () => {
@@ -130,7 +161,7 @@ const TrainDemo = () => {
       <p>模擬電車站牌翻頁</p>
 
       <div className="demo-display">
-        <div style={{ display: 'flex', gap: '2px', justifyContent: 'center', alignItems: 'center' }}>
+        <div style={{ display: 'flex', gap: '2px', justifyContent: 'center', alignItems: 'center', flexWrap: 'wrap' }}>
           <LongFlap
             key="seq"
             flaps={SEQ_FLAPS}
@@ -138,7 +169,6 @@ const TrainDemo = () => {
             digitWidth={100}
             size="large"
             theme="dark"
-            timing={40}
           />
           <LongFlap
             key="train-type"
@@ -147,7 +177,6 @@ const TrainDemo = () => {
             digitWidth={81}
             size="large"
             theme="dark"
-            timing={40}
           />
           <LongFlap
             key="destination"
@@ -156,7 +185,30 @@ const TrainDemo = () => {
             digitWidth={200}
             size="large"
             theme="dark"
-            timing={45}
+          />
+          <LongFlap
+            key="hour"
+            flaps={HOUR_FLAPS}
+            displayId={currentHour.toString()}
+            digitWidth={80}
+            size="large"
+            theme="dark"
+          />
+          <LongFlap
+            key="minute-tens"
+            flaps={MINUTE_FLAPS}
+            displayId={currentMinuteTens.toString()}
+            digitWidth={42}
+            size="large"
+            theme="dark"
+          />
+          <LongFlap
+            key="minute-units"
+            flaps={MINUTE_FLAPS}
+            displayId={currentMinuteUnits.toString()}
+            digitWidth={42}
+            size="large"
+            theme="dark"
           />
           <LongFlap
             key="bikou"
@@ -165,7 +217,6 @@ const TrainDemo = () => {
             digitWidth={350}
             size="large"
             theme="dark"
-            timing={42}
           />
         </div>
       </div>
