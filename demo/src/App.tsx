@@ -5,8 +5,6 @@ import CarouselDemo from './components/CarouselDemo'
 import InputDemo from './components/InputDemo'
 import ThemesDemo from './components/ThemesDemo'
 import TrainDemo from './components/TrainDemo'
-import NoHingeDemo from './components/NoHingeDemo'
-import SpecialCharactersDemo from './components/SpecialCharactersDemo'
 import LongFlapDemo from './components/LongFlapDemo'
 import FlightDemo from './components/FlightDemo'
 import './App.css'
@@ -25,16 +23,9 @@ function App() {
         <TrainDemo />
         <FlightDemo />
         <CarouselDemo />
+        <LongFlapDemo />
         <InputDemo />
         <ThemesDemo />
-        <NoHingeDemo />
-        <SpecialCharactersDemo />
-        <LongFlapDemo />
-
-        <footer>
-          <p>Built with React & TypeScript | Powered by Vite</p>
-          <p>🎨 參考設計靈感來自經典的 Solari 翻頁顯示器</p>
-        </footer>
       </div>
     </div>
   )

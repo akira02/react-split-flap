@@ -33,6 +33,12 @@ const ThemesDemo = () => {
             <SplitFlap value="XL" chars={Presets.ALPHANUM} length={2} size="xlarge" theme="light" />
           </div>
         </div>
+        <div className="theme-item">
+          <h3>{t('sections.themes.no-hinge-dark')}</h3>
+          <div className="demo-display">
+            <SplitFlap value="NO" chars={Presets.ALPHANUM} length={2} size="xlarge" theme="dark" hinge={false} />
+          </div>
+        </div>
       </div>
     </div>
   )

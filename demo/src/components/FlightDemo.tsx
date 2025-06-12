@@ -1,5 +1,6 @@
-import { useState, useMemo, useEffect } from 'react'
+import { useState, useEffect, useMemo } from 'react'
 import { SplitFlap, LongFlap, Presets } from 'react-split-flap'
+import { useTranslation } from 'react-i18next'
 
 interface Flight {
   FlightNumber: string
@@ -170,7 +171,7 @@ const getStatusFlaps = () => [
           width: '100%',
         }}
       >
-        --
+        登機中 BOARDING
       </div>
     ),
   },
@@ -312,25 +313,53 @@ const flightSet2: Flight[] = [
   },
 ]
 const FlightDemo = () => {
-  // State to manage which flight set to display
-  const [currentFlightSet, setCurrentFlightSet] = useState<'set1' | 'set2'>('set1')
+  const { t } = useTranslation()
+  // State to manage which flight set each row should display
+  const [rowFlightSets, setRowFlightSets] = useState<('set1' | 'set2')[]>(['set1', 'set1', 'set1'])
 
   // Memoize status flaps to prevent recreation on each render
   const statusFlaps = useMemo(() => getStatusFlaps(), [])
 
-  // Get current flights based on selected set
-  const currentFlights = currentFlightSet === 'set1' ? flightSet1 : flightSet2
+  // Get flight data for each row
+  const getFlightForRow = (rowIndex: number): Flight | null => {
+    const flightSet = rowFlightSets[rowIndex] === 'set1' ? flightSet1 : flightSet2
+    return flightSet[rowIndex] || null
+  }
 
   useEffect(() => {
     const interval = setInterval(() => {
-      setCurrentFlightSet((prev) => (prev === 'set1' ? 'set2' : 'set1'))
-    }, 3000)
+      // Update rows sequentially with 500ms delay between each row
+      setTimeout(() => {
+        setRowFlightSets((prev) => [
+          prev[0] === 'set1' ? 'set2' : 'set1', // Update first row
+          prev[1],
+          prev[2],
+        ])
+      }, 0)
+
+      setTimeout(() => {
+        setRowFlightSets((prev) => [
+          prev[0],
+          prev[1] === 'set1' ? 'set2' : 'set1', // Update second row
+          prev[2],
+        ])
+      }, 4000)
+
+      setTimeout(() => {
+        setRowFlightSets((prev) => [
+          prev[0],
+          prev[1],
+          prev[2] === 'set1' ? 'set2' : 'set1', // Update third row
+        ])
+      }, 8000)
+    }, 12000)
+
     return () => clearInterval(interval)
   }, [])
 
   return (
     <div className="demo-section">
-      <h2>機場航班看板</h2>
+      <h2>{t('sections.flight.title')}</h2>
 
       <div
         className="demo-display"
@@ -361,7 +390,7 @@ const FlightDemo = () => {
 
         {/* Flight rows */}
         {/* Flight 1 */}
-        {currentFlights[0] && (
+        {getFlightForRow(0) && (
           <div
             style={{
               display: 'grid',
@@ -375,7 +404,7 @@ const FlightDemo = () => {
             {/* Flight Number */}
             <div>
               <SplitFlap
-                value={currentFlights[0].AirlineID + currentFlights[0].FlightNumber}
+                value={getFlightForRow(0)!.AirlineID + getFlightForRow(0)!.FlightNumber}
                 chars={Presets.ALPHANUM}
                 length={6}
                 size="medium"
@@ -386,7 +415,7 @@ const FlightDemo = () => {
             {/* Gate */}
             <div>
               <SplitFlap
-                value={currentFlights[0].Gate.trim() || '---'}
+                value={getFlightForRow(0)!.Gate.trim() || '---'}
                 chars={Presets.ALPHANUM}
                 length={3}
                 size="medium"
@@ -398,7 +427,7 @@ const FlightDemo = () => {
             {/* Destination */}
             <div>
               <SplitFlap
-                value={getAirportName(currentFlights[0].ArrivalAirportID)}
+                value={getAirportName(getFlightForRow(0)!.ArrivalAirportID)}
                 chars={Presets.ALPHANUM}
                 length={9}
                 size="medium"
@@ -410,7 +439,8 @@ const FlightDemo = () => {
             <div style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
               <SplitFlap
                 value={
-                  formatTime(currentFlights[0].EstimatedDepartureTime || currentFlights[0].ScheduleDepartureTime).hour
+                  formatTime(getFlightForRow(0)!.EstimatedDepartureTime || getFlightForRow(0)!.ScheduleDepartureTime)
+                    .hour
                 }
                 chars={Presets.NUM}
                 length={2}
@@ -420,7 +450,8 @@ const FlightDemo = () => {
               <span style={{ color: '#ffffff', fontSize: '20px', fontWeight: 'bold' }}>:</span>
               <SplitFlap
                 value={
-                  formatTime(currentFlights[0].EstimatedDepartureTime || currentFlights[0].ScheduleDepartureTime).minute
+                  formatTime(getFlightForRow(0)!.EstimatedDepartureTime || getFlightForRow(0)!.ScheduleDepartureTime)
+                    .minute
                 }
                 chars={Presets.NUM}
                 length={2}
@@ -433,7 +464,7 @@ const FlightDemo = () => {
             <div>
               <LongFlap
                 flaps={statusFlaps}
-                displayId={getStatusId(currentFlights[0].DepartureRemark)}
+                displayId={getStatusId(getFlightForRow(0)!.DepartureRemark)}
                 digitWidth={150}
                 digitHeight={35}
                 timing={30}
@@ -445,7 +476,7 @@ const FlightDemo = () => {
         )}
 
         {/* Flight 2 */}
-        {currentFlights[1] && (
+        {getFlightForRow(1) && (
           <div
             style={{
               display: 'grid',
@@ -459,7 +490,7 @@ const FlightDemo = () => {
             {/* Flight Number */}
             <div>
               <SplitFlap
-                value={currentFlights[1].AirlineID + currentFlights[1].FlightNumber}
+                value={getFlightForRow(1)!.AirlineID + getFlightForRow(1)!.FlightNumber}
                 chars={Presets.ALPHANUM}
                 length={6}
                 size="medium"
@@ -470,7 +501,7 @@ const FlightDemo = () => {
             {/* Gate */}
             <div>
               <SplitFlap
-                value={currentFlights[1].Gate.trim() || '---'}
+                value={getFlightForRow(1)!.Gate.trim() || '---'}
                 chars={Presets.ALPHANUM}
                 length={3}
                 size="medium"
@@ -482,7 +513,7 @@ const FlightDemo = () => {
             {/* Destination */}
             <div>
               <SplitFlap
-                value={getAirportName(currentFlights[1].ArrivalAirportID)}
+                value={getAirportName(getFlightForRow(1)!.ArrivalAirportID)}
                 chars={Presets.ALPHANUM}
                 length={9}
                 size="medium"
@@ -494,7 +525,8 @@ const FlightDemo = () => {
             <div style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
               <SplitFlap
                 value={
-                  formatTime(currentFlights[1].EstimatedDepartureTime || currentFlights[1].ScheduleDepartureTime).hour
+                  formatTime(getFlightForRow(1)!.EstimatedDepartureTime || getFlightForRow(1)!.ScheduleDepartureTime)
+                    .hour
                 }
                 chars={Presets.NUM}
                 length={2}
@@ -504,7 +536,8 @@ const FlightDemo = () => {
               <span style={{ color: '#ffffff', fontSize: '20px', fontWeight: 'bold' }}>:</span>
               <SplitFlap
                 value={
-                  formatTime(currentFlights[1].EstimatedDepartureTime || currentFlights[1].ScheduleDepartureTime).minute
+                  formatTime(getFlightForRow(1)!.EstimatedDepartureTime || getFlightForRow(1)!.ScheduleDepartureTime)
+                    .minute
                 }
                 chars={Presets.NUM}
                 length={2}
@@ -517,7 +550,7 @@ const FlightDemo = () => {
             <div>
               <LongFlap
                 flaps={statusFlaps}
-                displayId={getStatusId(currentFlights[1].DepartureRemark)}
+                displayId={getStatusId(getFlightForRow(1)!.DepartureRemark)}
                 digitWidth={150}
                 digitHeight={35}
                 timing={30}
@@ -529,7 +562,7 @@ const FlightDemo = () => {
         )}
 
         {/* Flight 3 */}
-        {currentFlights[2] && (
+        {getFlightForRow(2) && (
           <div
             style={{
               display: 'grid',
@@ -543,7 +576,7 @@ const FlightDemo = () => {
             {/* Flight Number */}
             <div>
               <SplitFlap
-                value={currentFlights[2].AirlineID + currentFlights[2].FlightNumber}
+                value={getFlightForRow(2)!.AirlineID + getFlightForRow(2)!.FlightNumber}
                 chars={Presets.ALPHANUM}
                 length={6}
                 size="medium"
@@ -554,7 +587,7 @@ const FlightDemo = () => {
             {/* Gate */}
             <div>
               <SplitFlap
-                value={currentFlights[2].Gate.trim() || '---'}
+                value={getFlightForRow(2)!.Gate.trim() || '---'}
                 chars={Presets.ALPHANUM}
                 length={3}
                 size="medium"
@@ -566,7 +599,7 @@ const FlightDemo = () => {
             {/* Destination */}
             <div>
               <SplitFlap
-                value={getAirportName(currentFlights[2].ArrivalAirportID)}
+                value={getAirportName(getFlightForRow(2)!.ArrivalAirportID)}
                 chars={Presets.ALPHANUM}
                 length={9}
                 size="medium"
@@ -578,7 +611,8 @@ const FlightDemo = () => {
             <div style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
               <SplitFlap
                 value={
-                  formatTime(currentFlights[2].EstimatedDepartureTime || currentFlights[2].ScheduleDepartureTime).hour
+                  formatTime(getFlightForRow(2)!.EstimatedDepartureTime || getFlightForRow(2)!.ScheduleDepartureTime)
+                    .hour
                 }
                 chars={Presets.NUM}
                 length={2}
@@ -588,7 +622,8 @@ const FlightDemo = () => {
               <span style={{ color: '#ffffff', fontSize: '20px', fontWeight: 'bold' }}>:</span>
               <SplitFlap
                 value={
-                  formatTime(currentFlights[2].EstimatedDepartureTime || currentFlights[2].ScheduleDepartureTime).minute
+                  formatTime(getFlightForRow(2)!.EstimatedDepartureTime || getFlightForRow(2)!.ScheduleDepartureTime)
+                    .minute
                 }
                 chars={Presets.NUM}
                 length={2}
@@ -601,175 +636,7 @@ const FlightDemo = () => {
             <div>
               <LongFlap
                 flaps={statusFlaps}
-                displayId={getStatusId(currentFlights[2].DepartureRemark)}
-                digitWidth={150}
-                digitHeight={35}
-                timing={30}
-                size="medium"
-                theme="dark"
-              />
-            </div>
-          </div>
-        )}
-
-        {/* Flight 4 */}
-        {currentFlights[3] && (
-          <div
-            style={{
-              display: 'grid',
-              gridTemplateColumns: '200px 80px 300px 100px 150px',
-              gap: '20px',
-              padding: '15px 10px',
-              background: '#1f1f1f',
-              borderLeft: '4px solid #3b82f6',
-            }}
-          >
-            {/* Flight Number */}
-            <div>
-              <SplitFlap
-                value={currentFlights[3].AirlineID + currentFlights[3].FlightNumber}
-                chars={Presets.ALPHANUM}
-                length={6}
-                size="medium"
-                theme="dark"
-              />
-            </div>
-
-            {/* Gate */}
-            <div>
-              <SplitFlap
-                value={currentFlights[3].Gate.trim() || '---'}
-                chars={Presets.ALPHANUM}
-                length={3}
-                size="medium"
-                theme="dark"
-                padMode="end"
-              />
-            </div>
-
-            {/* Destination */}
-            <div>
-              <SplitFlap
-                value={getAirportName(currentFlights[3].ArrivalAirportID)}
-                chars={Presets.ALPHANUM}
-                length={9}
-                size="medium"
-                theme="dark"
-              />
-            </div>
-
-            {/* Time */}
-            <div style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
-              <SplitFlap
-                value={
-                  formatTime(currentFlights[3].EstimatedDepartureTime || currentFlights[3].ScheduleDepartureTime).hour
-                }
-                chars={Presets.NUM}
-                length={2}
-                size="medium"
-                theme="dark"
-              />
-              <span style={{ color: '#ffffff', fontSize: '20px', fontWeight: 'bold' }}>:</span>
-              <SplitFlap
-                value={
-                  formatTime(currentFlights[3].EstimatedDepartureTime || currentFlights[3].ScheduleDepartureTime).minute
-                }
-                chars={Presets.NUM}
-                length={2}
-                size="medium"
-                theme="dark"
-              />
-            </div>
-
-            {/* Status */}
-            <div>
-              <LongFlap
-                flaps={statusFlaps}
-                displayId={getStatusId(currentFlights[3].DepartureRemark)}
-                digitWidth={150}
-                digitHeight={35}
-                timing={30}
-                size="medium"
-                theme="dark"
-              />
-            </div>
-          </div>
-        )}
-
-        {/* Flight 5 */}
-        {currentFlights[4] && (
-          <div
-            style={{
-              display: 'grid',
-              gridTemplateColumns: '200px 80px 300px 100px 150px',
-              gap: '20px',
-              padding: '15px 10px',
-              background: '#2a2a2a',
-              borderLeft: '4px solid #3b82f6',
-            }}
-          >
-            {/* Flight Number */}
-            <div>
-              <SplitFlap
-                value={currentFlights[4].AirlineID + currentFlights[4].FlightNumber}
-                chars={Presets.ALPHANUM}
-                length={6}
-                size="medium"
-                theme="dark"
-              />
-            </div>
-
-            {/* Gate */}
-            <div>
-              <SplitFlap
-                value={currentFlights[4].Gate.trim() || '---'}
-                chars={Presets.ALPHANUM}
-                length={3}
-                size="medium"
-                theme="dark"
-                padMode="end"
-              />
-            </div>
-
-            {/* Destination */}
-            <div>
-              <SplitFlap
-                value={getAirportName(currentFlights[4].ArrivalAirportID)}
-                chars={Presets.ALPHANUM}
-                length={9}
-                size="medium"
-                theme="dark"
-              />
-            </div>
-
-            {/* Time */}
-            <div style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
-              <SplitFlap
-                value={
-                  formatTime(currentFlights[4].EstimatedDepartureTime || currentFlights[4].ScheduleDepartureTime).hour
-                }
-                chars={Presets.NUM}
-                length={2}
-                size="medium"
-                theme="dark"
-              />
-              <span style={{ color: '#ffffff', fontSize: '20px', fontWeight: 'bold' }}>:</span>
-              <SplitFlap
-                value={
-                  formatTime(currentFlights[4].EstimatedDepartureTime || currentFlights[4].ScheduleDepartureTime).minute
-                }
-                chars={Presets.NUM}
-                length={2}
-                size="medium"
-                theme="dark"
-              />
-            </div>
-
-            {/* Status */}
-            <div>
-              <LongFlap
-                flaps={statusFlaps}
-                displayId={getStatusId(currentFlights[4].DepartureRemark)}
+                displayId={getStatusId(getFlightForRow(2)!.DepartureRemark)}
                 digitWidth={150}
                 digitHeight={35}
                 timing={30}

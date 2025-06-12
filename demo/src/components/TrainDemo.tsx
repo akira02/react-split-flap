@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react'
 import { LongFlap } from 'react-split-flap'
+import { useTranslation } from 'react-i18next'
 
 const SEQ: {
   word: string
@@ -131,6 +132,7 @@ const MINUTE_FLAPS = Array.from({ length: 10 }, (_, index) => ({
 }))
 
 const TrainDemo = () => {
+  const { t } = useTranslation()
   const [currentTrainType, setCurrentTrainType] = useState(0)
   const [currentDestination, setCurrentDestination] = useState(1)
   const [currentSeq, setCurrentSeq] = useState(0)
@@ -157,8 +159,7 @@ const TrainDemo = () => {
 
   return (
     <div className="demo-section">
-      <h2>電車站牌翻頁</h2>
-      <p>模擬電車站牌翻頁</p>
+      <h2>{t('sections.train.title')}</h2>
 
       <div className="demo-display">
         <div style={{ display: 'flex', gap: '2px', justifyContent: 'center', alignItems: 'center', flexWrap: 'wrap' }}>

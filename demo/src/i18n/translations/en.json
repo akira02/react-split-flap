@@ -6,25 +6,9 @@
       "title": "Real-time Clock",
       "description": "Digital clock that updates every second, demonstrating continuous number transitions"
     },
-    "counter": {
-      "title": "Number Counter",
-      "description": "Auto-incrementing counter demonstrating number scrolling effects"
-    },
     "carousel": {
       "title": "Text Carousel",
       "description": "Rotating city names demonstrating letter transition effects"
-    },
-    "airport": {
-      "title": "Airport Codes",
-      "description": "Simulating airport display board three-letter code transitions"
-    },
-    "temperature": {
-      "title": "Temperature Display",
-      "description": "Simulating thermometer value changes with degree symbol"
-    },
-    "stations": {
-      "title": "🚃 Japanese Train Stations",
-      "description": "Simulating JR Yamanote Line station displays, auto-rotating through major Tokyo stations"
     },
     "input": {
       "title": "Interactive Input",
@@ -34,14 +18,25 @@
     "themes": {
       "title": "Theme Showcase",
       "description": "Different sizes and theme display effects",
-      "small": "🔸 Small Dark",
-      "medium": "⚪ Medium Light",
-      "large": "🔷 Large Dark",
-      "xlarge": "⭐ XLarge Light"
+      "small": "Small Dark",
+      "medium": "Medium Light",
+      "large": "Large Dark",
+      "xlarge": "XLarge Light",
+      "no-hinge-dark": "No Hinge Mode"
+    },
+    "train": {
+      "title": "Train Station Display"
+    },
+    "flight": {
+      "title": "Flight Board"
+    },
+    "long-flap": {
+      "title": "LongFlap",
+      "description": "<LongFlap> supports using custom components in flaps with ID-based switching, perfect for complex content like icons with text or images."
     }
   },
   "language": {
-    "switch": "Language",
+    "switch": "切換到",
     "english": "English",
     "chinese": "繁體中文"
   }

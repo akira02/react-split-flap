@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { LongFlap } from 'react-split-flap'
+import { useTranslation } from 'react-i18next'
 
 // Sample flaps with ReactNode components
 const weatherFlaps = [
@@ -43,14 +44,12 @@ const weatherFlaps = [
 
 const LongFlapDemo = () => {
   const [currentId, setCurrentId] = useState<string>('weather-sunny')
+  const { t } = useTranslation()
 
   return (
     <section className="demo-section">
-      <h2>🌤️ LongFlap Component - Weather Display</h2>
-      <p>
-        This new component allows you to use ReactNode components in flaps with ID-based switching, perfect for complex
-        content like icons with text.
-      </p>
+      <h2>{t('sections.long-flap.title')}</h2>
+      <p>{t('sections.long-flap.description')}</p>
 
       <div className="demo-content">
         <LongFlap

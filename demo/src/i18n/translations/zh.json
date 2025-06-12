@@ -3,28 +3,12 @@
   "subtitle": "經典的翻頁顯示器效果，靈感來自火車站和機場的顯示牌",
   "sections": {
     "clock": {
-      "title": "即時時鐘",
+      "title": "時鐘",
       "description": "每秒更新的數位時鐘，展示連續數字變化效果"
-    },
-    "counter": {
-      "title": "數字計數器",
-      "description": "自動遞增的計數器，展示數字滾動效果"
     },
     "carousel": {
       "title": "文字輪播",
       "description": "輪播不同的城市名稱，展示字母變化效果"
-    },
-    "airport": {
-      "title": "機場代碼",
-      "description": "模擬機場顯示牌的三字母代碼變化"
-    },
-    "temperature": {
-      "title": "溫度顯示",
-      "description": "模擬溫度計的數值變化，帶有度數符號"
-    },
-    "stations": {
-      "title": "🚃 日本車站站名輪播",
-      "description": "模擬日本JR山手線車站的站名顯示牌，自動輪播東京都內主要車站"
     },
     "input": {
       "title": "互動輸入",
@@ -38,10 +22,20 @@
       "medium": "⚪ 中型淺色",
       "large": "🔷 大型深色",
       "xlarge": "⭐ 特大淺色"
+    },
+    "train": {
+      "title": "電車站牌翻頁"
+    },
+    "flight": {
+      "title": "機場航班看板"
+    },
+    "long-flap": {
+      "title": "LongFlap",
+      "description": "<LongFlap>支援使用自定義元件，適用於複雜內容，如帶有文字的圖示或圖片。"
     }
   },
   "language": {
-    "switch": "語言",
+    "switch": "Switch to",
     "english": "English",
     "chinese": "繁體中文"
   }
